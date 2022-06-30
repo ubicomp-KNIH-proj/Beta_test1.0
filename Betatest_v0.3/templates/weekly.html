@@ -7,10 +7,9 @@
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta http-equiv="Content-Type" content="text/html" charset="EUC-KR">
-	<meta name="viewport" content="width=device-width, inital-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" >
 	<link rel="stylesheet" href="/static/style.css" type="text/css">
 	<!-- <script type="text/javascript" src="{{ url_for('static', filename='jscript.js') }}"></script> -->
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<script src="http://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
 		crossorigin="anonymous"></script>
 	<title>
@@ -428,6 +427,20 @@
 				alert("3번 문항을 입력하세요")
 				// document.getElementsByName("q3")[0].focus()
 			}
+			// else if(document.getElementsByName("q7")[1].value=="2") {
+			// 	if(document.getElementsByName("q7-2")[0].value=="") {
+			// 		alert("7번 문항을 입력하세요")
+			// 		document.getElementsByName("q7-2")[0].focus()
+			// 	}
+			// 	else if(document.getElementsByName("q7-2")[1].value=="") {
+			// 		alert("7번 문항을 입력하세요")
+			// 		document.getElementsByName("q7-2")[1].focus()
+			// 	}
+			// }
+			else if(document.getElementsByName("q8")[0].value=="") {
+				alert("8번 문항을 입력하세요")
+				document.getElementsByName("q8")[0].focus()
+			}
 			else if(document.getElementsByName("q8")[1].value=="") {
 				alert("8번 문항을 입력하세요")
 				document.getElementsByName("q8")[1].focus()
@@ -436,24 +449,6 @@
 				alert("9번 문항을 입력하세요")
 				document.getElementsByName("q9")[0].focus()
 			}
-			// 		}
-			// else if(document.getElementsByName("q7")[1].value=="2") {
-			// 		if(document.getElementsByName("q7-2")[0].value=="" ) {
-			// 			alert("7번 문항을 입력하세요.")
-			// 			document.getElementsByName("q7-2")[0].focus()
-			// 		}
-			// 		else if(document.getElementsByName("q7-2")[1].value=="" ) {
-			// 			alert("7번 문항을 입력하세요.")
-			// 			document.getElementsByName("q7-2")[1].focus()
-			// 		}
-			// }
-		    // else if(document.getElementsByName("q7")[0].value=="1") {
-			// 	if (document.getElementsByName("q8")[0].value=="") {
-			// 			alert("8번 문항을 입력하세요")
-			// 			document.getElementsByName("q8")[0].focus()
-			// 		}
-			// 		
-			// }	
 			else {
 				document.getElementById("submit_button").innerHTML = "제출 완료";
 				date = Date()
