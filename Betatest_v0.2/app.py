@@ -98,15 +98,22 @@ def ajax():
     daily_f = list(m['value'] for m in daily)
     # print(daily_f[3])
     # print(daily_f[4])
-    if daily_f[3] == '1' and daily_f[4] == '1':
-        print("갤럭시와 갤럭시 워치 사용자입니다.")
-        members.update_one({'id': x_survey}, {'$set': {'daily': 1}})
+    # if daily_f[3] == '1' and daily_f[4] == '1':
+    #     print("갤럭시와 갤럭시 워치 사용자입니다.")
+    #     members.update_one({'id': x_survey}, {'$set': {'daily': 1}})
+    # else:
+    #     if daily_f[3] == '2' and daily_f[4] == '2':
+    #         print("아이폰과 핏빗 사용자입니다.")
+    #         members.update_one({'id': x_survey}, {'$set': {'daily': 2}})
+    #     if (daily_f[3] == '1' and daily_f[4] == '2') or (daily_f[3] == '2' and daily_f[4] == '1'):
+    #         print("2번과 3번 조합이 틀립니다.")
+    if daily_f[3] == '1':
+        print('갤럭시 사용자입니다.')
+        members.update_one({'id':x_survey}, {'$set':{'daily':1}})
     else:
-        if daily_f[3] == '2' and daily_f[4] == '2':
-            print("아이폰과 핏빗 사용자입니다.")
-            members.update_one({'id': x_survey}, {'$set': {'daily': 2}})
-        if (daily_f[3] == '1' and daily_f[4] == '2') or (daily_f[3] == '2' and daily_f[4] == '1'):
-            print("2번과 3번 조합이 틀립니다.")
+        if daily_f[3] == '2':
+            print('아이폰 사용자입니다.')
+            members.update_one({'id':x_survey}, {'$set':{'daily':2}})
 
     return jsonify(result = "success", result2= data, result3=daily)
     
@@ -154,11 +161,12 @@ def login():
                     # members.update_one({'id': id}, {'$set': {'weekly_count': 1}})
                     #이번주 썼음
                     members.update_one({'id': id}, {'$set': {'weekly_count': 1}}) #w=1, x=1
-                    if member_id['daily'] == 1:
-                        return render_template('gal_daily.html', sid=id, cnt=count, fcnt=fcount, wcnt=wcount)
-                    else:
-                        if member_id['daily'] == 2:
-                            return render_template('daily.html', sid=id, cnt=count, fcnt=fcount, wcnt=wcount)
+                    return render_template('weekly.html', sid=id, cnt=count, fcnt=fcount, wcnt=wcount)
+                    # if member_id['daily'] == 1:
+                    #     return render_template('gal_daily.html', sid=id, cnt=count, fcnt=fcount, wcnt=wcount)
+                    # else:
+                    #     if member_id['daily'] == 2:
+                    #         return render_template('daily.html', sid=id, cnt=count, fcnt=fcount, wcnt=wcount)
                 else: #일요일, x=0이면
                     #이번주 안 썼음
                     members.update_one({'id': id}, {'$set': {'x_count': 1}}) #x=1, w=0
