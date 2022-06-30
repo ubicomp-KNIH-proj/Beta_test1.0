@@ -15,15 +15,20 @@ import logging
 from apscheduler.schedulers.blocking import BlockingScheduler
 from apscheduler.schedulers.background import BackgroundScheduler
 
+sched = BackgroundScheduler(daemon=True)
+
 def count():
     asia_seoul = datetime.datetime.fromtimestamp(time.time(), pytz.timezone('Asia/Seoul'))
     t = ['월요일', '화요일', '수요일', '목요일', '금요일', '토요일', '일요일']
     now = t[asia_seoul.today().weekday()]
-    if now == '화요일':
+    if now == '금요일':
         members.update_many({}, {'$inc': {'weekly_count': 1}}) #collection에 있는 모든 id에서 count가 1씩 증가
 
-sched = BackgroundScheduler(daemon=True)
-sched.add_job(count, 'interval', minutes=1)
+
+# sched.add_job(count, 'cron', hour="4", minute="50", id="test_1")
+# 금요일 오후 11시 59분에 +1
+sched.add_job(count, 'cron', hour="23", minute="59", id="test_1")
+
 sched.start()
 
 app = Flask(__name__)
@@ -65,13 +70,16 @@ def register():
             "attach_count": 0,
             "submit_count": 0,
             "weekly_count": 0,
-            "x_count" : 0,
             "daily": 0
         }
-
-        #회원가입시 컬렉션 생성
-        mongo.db.create_collection(id) 
-
+        print(mongo.db.list_collection_names())
+        if id in mongo.db.list_collection_names() :
+            flash("이미 가입한 계정이 있습니다.")
+            return render_template("register.html", data=id)
+        else :
+            #회원가입시 컬렉션 생성
+            mongo.db.create_collection(id)  
+        
         if not (id and pwd and pwd2):
             return "모두 입력해주세요"
         elif pwd != pwd2:
@@ -136,40 +144,23 @@ def login():
             count = member_id['submit_count']
             fcount = member_id['attach_count']
             wcount = member_id['weekly_count']
-            xcount = member_id['x_count']
             asia_seoul = datetime.datetime.fromtimestamp(time.time(), pytz.timezone('Asia/Seoul'))
             t = ['월요일', '화요일', '수요일', '목요일', '금요일', '토요일', '일요일']
             now = t[asia_seoul.today().weekday()]
 
-            # x=0, w=0 초기화
-            if now == '토요일':
-                if member_id['w_count'] == 0:
-                    # members.update_one({'id': id}, {'$inc': {'weekly_count': -1}}) #토요일 로그인 -> count가 1씩 감소
-                    members.update_one({'id': id}, {'$set': {'x_count': 1}}) #토요일, x=1, w=0
+            if now == "금요일":
+                members.update_one({'id': id}, {'$inc': {'weekly_count': -1}}) #토요일 로그인 -> count가 1씩 감소
+                return render_template('weekly.html', sid=id, cnt=count, fcnt=fcount, wcnt=wcount)
+            else:
+                if member_id['weekly_count'] > 0:
                     return render_template('weekly.html', sid=id, cnt=count, fcnt=fcount, wcnt=wcount)
                 else:
-                    members.update_one({'id': id}, {'$set': {'x_count': 1}})
                     if member_id['daily'] == 1:
                         return render_template('gal_daily.html', sid=id, cnt=count, fcnt=fcount, wcnt=wcount)
                     else:
                         if member_id['daily'] == 2:
                             return render_template('daily.html', sid=id, cnt=count, fcnt=fcount, wcnt=wcount)
-            else:
-                # members.update_one({'id': id}, {'$set': {'weekly_count': 0}})
-                if member_id['x_count'] == 1: #일요일, x=1이면
-                    # members.update_one({'id': id}, {'$set': {'weekly_count': 1}})
-                    #이번주 썼음
-                    members.update_one({'id': id}, {'$set': {'weekly_count': 1}}) #w=1, x=1
-                    return render_template('weekly.html', sid=id, cnt=count, fcnt=fcount, wcnt=wcount)
-                    # if member_id['daily'] == 1:
-                    #     return render_template('gal_daily.html', sid=id, cnt=count, fcnt=fcount, wcnt=wcount)
-                    # else:
-                    #     if member_id['daily'] == 2:
-                    #         return render_template('daily.html', sid=id, cnt=count, fcnt=fcount, wcnt=wcount)
-                else: #일요일, x=0이면
-                    #이번주 안 썼음
-                    members.update_one({'id': id}, {'$set': {'x_count': 1}}) #x=1, w=0
-                    return render_template('weekly.html', sid=id, cnt=count, fcnt=fcount)
+            
             # if count == 0: 
             #     return render_template('daily.html', sid=id, cnt=count, fcnt=fcount)
             # elif count % 7 == 0:
@@ -279,8 +270,13 @@ def weekly():
     member_id = members.find_one({'id': x_survey})
     count = member_id['submit_count']
     fcount = member_id['attach_count']
+    if member_id['daily'] == 1:
+        return jsonify(render_template("gal_daily.html", sid=x_survey, cnt=count, fcnt=fcount))
+    else:
+        if member_id['daily'] == 2:
+            return jsonify(render_template("daily.html", sid=x_survey, cnt=count, fcnt=fcount))
 
-    return jsonify(render_template("gal_daily.html", sid=x_survey, cnt=count, fcnt=fcount))
+    
     
 @app.route('/pop.html', methods=['GET'])
 def window_pop():
