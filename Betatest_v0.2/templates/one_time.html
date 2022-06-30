@@ -112,7 +112,7 @@
 			<label for="q4" id="label-q4">
             4. 출생년도를 입력해주세요
             </label>
-            <input type="number" id="age" maxlength="4" placeholder="1999" name="q4" oninput="limitNumber(this, 4)" required/>
+            <input type="tel" id="age" maxlength="4" placeholder="1999" name="q4" oninput="limitNumber(this, 4)" required/>
         </div>
         <br>
 
@@ -442,8 +442,8 @@
                     console.log(postdata)
                     // location.href="http://192.168.0.18:2019/final"
                     // location.href="http://114.71.220.59:2017/final" #모비우스 서버에 이걸로
-                    // location.href = "http://192.168.0.18:2019/final" #랩탑
-					location.href = "http://localhost:2019/final"
+                    location.href = "http://192.168.0.18:2019/final"
+					// location.href = "http://localhost:2019/final"
 
                     // location.href="http://127.0.0.1:5000/final"
                     // alert('성공! ' + postdatadata.result2['postdata'])
