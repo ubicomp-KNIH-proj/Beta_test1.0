@@ -54,7 +54,9 @@
                      // location.href="http://192.168.0.18:2019/weekly"
                      		// location.href="http://114.71.220.59:2017/final" #모비우스 서버에 이걸로
 							// location.href = "http://localhost:2019/final"
-							location.href = "http://192.168.0.18:2019/final"
+							// location.href = "http://192.168.0.18:2019/final"
+							location.href = "http://192.168.0.6:2019/final"
+
 
                             //  location.href = "http://192.168.0.18:2019/final"
 						}
@@ -103,8 +105,11 @@
 			</label>
 			<hr>
 		</div>
-        <form name="이 폼의 이름" action="이 데이터들을 받을 파일" method="post" enctype="multipart/form-data">
-            <input type='file'  id="f" name="filed[]" multiple='multiple'/>
+        <form name="form1" action="이 데이터들을 받을 파일" method="post" enctype="multipart/form-data">
+            <div style="display:block">
+				<input type='file'  id="f" name="filed[]" multiple='multiple' style="text-align:center; display:block; margin: 0 auto; width: 50%;"/>
+			</div>
+			
         </form>
 		<!-- <input type="file" id="f" name="filed" multiple> -->
 	</form>
