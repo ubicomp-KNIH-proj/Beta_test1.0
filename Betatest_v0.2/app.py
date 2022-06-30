@@ -1,7 +1,6 @@
 from logging import setLogRecordFactory
 from sched import scheduler
 import string
-from colorama import Back
 from flask import *
 from flask_pymongo import PyMongo
 from pymongo import MongoClient
@@ -192,13 +191,13 @@ def logout():
 @app.route('/moody', methods=['POST'])
 def moody():  
     data = request.files['data']
-    print(data)
+    #print(data)
     st = data.read()
     l = st.decode()
     evl = eval(l)
     s_id = evl['sid']
     mood = evl['mood']
-    print("mood is ", mood)
+    #print("mood is ", mood)
     md = { "mood": mood }
     survey_coll = mongo.db.get_collection(s_id)
     survey_coll.insert_one(md)
@@ -207,7 +206,7 @@ def moody():
     #     print("not")
     #     pass
     # else:
-    print(request.files)
+    #print(request.files)
     if 'filed' in request.files:
         f = request.files['filed']
         print("file1 is", f)
@@ -233,13 +232,13 @@ def moody():
 @app.route('/moody2', methods=['POST'])
 def moody2():  
     data = request.files['data']
-    print(data)
+    #print(data)
     st = data.read()
     l = st.decode()
     evl = eval(l)
     s_id = evl['sid']
     mood = evl['mood']
-    print("mood is ", mood)
+    #print("mood is ", mood)
     md = { "mood": mood }
     survey_coll = mongo.db.get_collection(s_id)
     survey_coll.insert_one(md)
@@ -248,7 +247,7 @@ def moody2():
     #     print("not")
     #     pass
     # else:
-    print(request.files)
+    #print(request.files)
     if 'filed[]' in request.files:
         f = request.files.getlist('filed[]')
         for file in f:
@@ -271,7 +270,7 @@ def final():
 @app.route('/weekly', methods=['GET', 'POST'])
 def weekly():
     data = request.get_json()
-    print(data)
+    #print(data)
     x_survey = list(data.values())[0]
     survey_result = mongo.db.get_collection(x_survey)
     del data['ID']
@@ -288,6 +287,6 @@ def window_pop():
     return render_template("pop.html")
     
 if __name__ == '__main__':
-    # from waitress import serve
-    # # serve(app, host="0.0.0.0", port=2017)
-    app.run(host='0.0.0.0', port=2019)
+    from waitress import serve
+    serve(app, host="0.0.0.0", port=2017)
+    # app.run(host='0.0.0.0', port=2019)
