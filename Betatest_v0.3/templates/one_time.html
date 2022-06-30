@@ -12,7 +12,7 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" >
     <script src="https://code.jquery.com/jquery-latest.min.js"></script>
     <link rel="stylesheet" href="../static/style.css" type="text/css">
     <!-- <script src="../static/jscript.js" type="text/js"></script> -->
@@ -421,41 +421,61 @@
         let ID= '{{data}}'
         // alert(ID)
         function final() {
-            document.getElementById("submit_button").innerHTML = "제출 완료";
-            var formData1 = $('#form1').serializeArray()
-            var formData2 = $('#form2').serializeArray()
-            // var formData1 = $('#form1').serialize()
-            // var formData2 = $('#form2').serialize()
-            var postdata = {
-                ID, '1_formData1':formData1, '1_formData2':formData2
-            }
-            console.log(postdata)
-            $.ajax({
-                type: 'POST',
-                url: '{{url_for("ajax")}}',
-                data: JSON.stringify(postdata),
-                dataType : 'JSON',
-                contentType: "application/json",
-                success: function(data){
-
-                    // data = JSON.stringify(postdata) //JSON 배열 저장됨
-                    console.log(postdata)
-                    // location.href="http://192.168.0.18:2019/final"
-                    // location.href="http://114.71.220.59:2017/final" #모비우스 서버에 이걸로
-                    location.href = "http://192.168.0.18:2019/final"
-					// location.href = "http://localhost:2019/final"
-
-                    // location.href="http://127.0.0.1:5000/final"
-                    // alert('성공! ' + postdatadata.result2['postdata'])
-                    // alert('성공! ' + JSON.stringify(postdata))
-                    // alert(data)
-                    // survey.insert_one(data)
-                },
-                error: function(request, status, error){
-                    alert('ajax 통신 실패')
-                    alert(error);
+            if(document.getElementsByName("q1-1")[0].value=="") {
+				alert("1번 문항을 입력하세요")
+				document.getElementsByName("q1-1")[0].focus()
+			}
+            else if(document.getElementsByName("q1-2")[0].value=="") {
+				alert("1번 문항을 입력하세요.")
+				document.getElementsByName("q1-2")[0].focus()
+			}
+            else if(document.getElementsByName("q1-3")[0].value=="") {
+				alert("1번 문항을 입력하세요.")
+				document.getElementsByName("q1-3")[0].focus()
+			}
+            else if(document.getElementsByName("q4")[0].value=="") {
+				alert("4번 문항을 입력하세요.")
+				document.getElementsByName("q4")[0].focus()
+			}
+            else {
+                document.getElementById("submit_button").innerHTML = "제출 완료";
+                var formData1 = $('#form1').serializeArray()
+                var formData2 = $('#form2').serializeArray()
+                var postdata = {
+                    ID, '1_formData1':formData1, '1_formData2':formData2
                 }
-            })
+                console.log(postdata)
+                $.ajax({
+                    type: 'POST',
+                    url: '{{url_for("ajax")}}',
+                    data: JSON.stringify(postdata),
+                    dataType : 'JSON',
+                    contentType: "application/json",
+                    success: function(data){
+
+                        // data = JSON.stringify(postdata) //JSON 배열 저장됨
+                        console.log(postdata)
+                        // location.href="http://192.168.0.18:2019/final"
+                        // location.href="http://114.71.220.59:2017/final" #모비우스 서버에 이걸로
+                        // location.href = "http://192.168.0.18:2019/final"
+                        location.href = "http://192.168.0.6:2019/final"
+                        // location.href = "http://localhost:2019/final"
+
+                        // location.href="http://127.0.0.1:5000/final"
+                        // alert('성공! ' + postdatadata.result2['postdata'])
+                        // alert('성공! ' + JSON.stringify(postdata))
+                        // alert(data)
+                        // survey.insert_one(data)
+                    },
+                    error: function(request, status, error){
+                        alert('ajax 통신 실패')
+                        alert(error);
+                    }
+                })
+
+            }
+
+            
         }
     </script>
 </body>
