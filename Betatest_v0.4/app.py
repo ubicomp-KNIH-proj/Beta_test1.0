@@ -1,7 +1,6 @@
 from logging import setLogRecordFactory
 from sched import scheduler
 import string
-from tkinter.messagebox import NO
 from flask import *
 from flask_pymongo import PyMongo
 from pymongo import MongoClient
@@ -343,17 +342,15 @@ def getCountDict(today):
     return dict_CIN
     
 if __name__ == '__main__':
-    # from waitress import serve
-    # serve(app, host="0.0.0.0", port=2017)
+    
     sched = BackgroundScheduler(daemon=True)
     asia_seoul = datetime.datetime.fromtimestamp(time.time(), pytz.timezone('Asia/Seoul'))
     today = asia_seoul.strftime("%Y%m%d")
     # 금요일 오후 11시 59분에 +1
-    sched.add_job(count, 'cron', hour="21", minute="43", id="test_1")
-    sched.add_job(getCountDict, 'cron', hour="23", minute="17", id="test_2", args=[today])
+    sched.add_job(count, 'cron', hour="23", minute="59", id="test_1")
+    sched.add_job(getCountDict, 'cron', hour="23", minute="58", id="test_2", args=[today])
     sched.start()
 
-    app.run(host='0.0.0.0', port=2019)
-
-
-
+    from waitress import serve
+    serve(app, host="0.0.0.0", port=2017)
+    # app.run(host='0.0.0.0', port=2019)
