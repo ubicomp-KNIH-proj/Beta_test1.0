@@ -8,10 +8,8 @@ import datetime
 from flask import flash
 from flask import url_for
 import gridfs
-# from datetime import datetime
 import time
 import pytz
-import logging
 from apscheduler.schedulers.blocking import BlockingScheduler
 from apscheduler.schedulers.background import BackgroundScheduler
 
@@ -27,7 +25,6 @@ members = mongo.db.members
 db = client['survey']
 
 # sched = BlockingScheduler()
-
 # @sched.scheduled_job('cron', day_of_week='tue', hour='20', minute='00')
 # # @sched.scheduled_job('cron', day_of_week='tue', hour=16, minute=00)
 
@@ -71,6 +68,43 @@ def register():
         else:
             members.insert_one(post)
             return render_template("one_time.html", data=id)
+
+# 회원가입
+@app.route('/register_en', methods=['GET','POST'])
+def register_en():
+    if request.method == 'GET':
+        return render_template("register_en.html")
+    else:
+        id = request.form.get("id", type=str)
+        pwd = request.form.get("pwd", type=str)
+        pwd2 = request.form.get("pwd2", type=str)
+        
+        current_utc_time = round(datetime.datetime.utcnow().timestamp() * 1000)
+        post = {
+            "id": id,
+            "pwd": pwd,
+            "register_date": current_utc_time,
+            "attach_count": 0,
+            "submit_count": 0,
+            "weekly_count": 0,
+            "daily": 0
+        }
+        print(mongo.db.list_collection_names())
+        if id in mongo.db.list_collection_names() :
+            flash("이미 가입한 계정이 있습니다.")
+            return render_template("register.html", data=id)
+        else :
+            #회원가입시 컬렉션 생성
+            mongo.db.create_collection(id)  
+        
+        if not (id and pwd and pwd2):
+            return "모두 입력해주세요"
+        elif pwd != pwd2:
+            return "비밀번호를 확인해주세요."
+        else:
+            members.insert_one(post)
+            return render_template("one_time.html", data=id)
+
 
 @app.route('/ajax', methods=['GET', 'POST'])
 def ajax():
@@ -269,6 +303,8 @@ def window_pop():
 if __name__ == '__main__':
     # from waitress import serve
     # serve(app, host="0.0.0.0", port=2017)
+    app.run(host='0.0.0.0', port=2019)
+
     sched = BackgroundScheduler(daemon=True)
     asia_seoul = datetime.datetime.fromtimestamp(time.time(), pytz.timezone('Asia/Seoul'))
     # print(asia_seoul.today().date())
@@ -277,7 +313,7 @@ if __name__ == '__main__':
 
     def count():
         asia_seoul = datetime.datetime.fromtimestamp(time.time(), pytz.timezone('Asia/Seoul'))
-        print(asia_seoul.today())
+        # print(asia_seoul.today())
         t = ['월요일', '화요일', '수요일', '목요일', '금요일', '토요일', '일요일']
         now = t[asia_seoul.today().weekday()]
         if now == '금요일':
@@ -289,4 +325,3 @@ if __name__ == '__main__':
     sched.add_job(count, 'cron', hour="23", minute="59", id="test_1")
     sched.start()
 
-    app.run(host='0.0.0.0', port=2019)
