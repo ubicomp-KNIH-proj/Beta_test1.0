@@ -16,9 +16,14 @@ from apscheduler.schedulers.blocking import BlockingScheduler
 from apscheduler.schedulers.background import BackgroundScheduler
 
 sched = BackgroundScheduler(daemon=True)
+asia_seoul = datetime.datetime.fromtimestamp(time.time(), pytz.timezone('Asia/Seoul'))
+# print(asia_seoul.today().date())
+today = asia_seoul.strftime("%Y%m%d")
+
 
 def count():
     asia_seoul = datetime.datetime.fromtimestamp(time.time(), pytz.timezone('Asia/Seoul'))
+    print(asia_seoul.today())
     t = ['월요일', '화요일', '수요일', '목요일', '금요일', '토요일', '일요일']
     now = t[asia_seoul.today().weekday()]
     if now == '금요일':
@@ -135,7 +140,7 @@ def login():
     # print(wcount)
     if user is None:
         # return "<h1>다시 로그인해주세요</h1>"
-        flash("존재하지 않는 계정입니다. 회원가입해주세요.")
+        flash("접속하신 계정은 존재하지 않는 계정입니다.")
         return render_template('login.html')
     else:
         member_id = members.find_one({'id': id})
