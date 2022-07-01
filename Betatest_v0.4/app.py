@@ -50,7 +50,7 @@ def register():
             "daily": 0,
             "CIN_count": 0
         }
-        print(mongo.db.list_collection_names())
+        # print(mongo.db.list_collection_names())
         if id in mongo.db.list_collection_names() :
             flash("이미 가입한 계정이 있습니다.")
             return render_template("register.html", data=id)
@@ -126,11 +126,11 @@ def ajax():
     #     if (daily_f[3] == '1' and daily_f[4] == '2') or (daily_f[3] == '2' and daily_f[4] == '1'):
     #         print("2번과 3번 조합이 틀립니다.")
     if daily_f[3] == '1':
-        print('갤럭시 사용자입니다.')
+        # print('갤럭시 사용자입니다.')
         members.update_one({'id':x_survey}, {'$set':{'daily':1}})
     else:
         if daily_f[3] == '2':
-            print('아이폰 사용자입니다.')
+            # print('아이폰 사용자입니다.')
             members.update_one({'id':x_survey}, {'$set':{'daily':2}})
 
     return jsonify(result = "success", result2= data, result3=daily)
@@ -354,3 +354,5 @@ if __name__ == '__main__':
     from waitress import serve
     serve(app, host="0.0.0.0", port=2017)
     # app.run(host='0.0.0.0', port=2019)
+
+
