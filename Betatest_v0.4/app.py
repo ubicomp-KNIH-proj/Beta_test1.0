@@ -295,8 +295,8 @@ def count():
 IoT_1 = "http://114.71.220.59:7579"
 
 def countCIN(serverName, aeName, today):
-    asia_seoul = datetime.datetime.fromtimestamp(time.time(), pytz.timezone('Asia/Seoul'))
-    today = asia_seoul.strftime("%Y%m%d")
+    # asia_seoul = datetime.datetime.fromtimestamp(time.time(), pytz.timezone('Asia/Seoul'))
+    # today = asia_seoul.strftime("%Y%m%d")
     cra = '&cra=' + today + 'T000000'
     crb = '&crb=' + today + 'T235959'
     
@@ -332,13 +332,15 @@ def getCountDict(today):
             continue
         else:
             dict_CIN[aeName] = cnt
+            
     for k,v in dict_CIN.items():
         k=str(k)
-        v=str(v)
+        print(v)
         # print("{}:{}".format(k,v))
         member_id = members.find_one({'id': k})
-        if(member_id!=None):
-            members.update_one({'id':k}, {'$set':{'CIN_count':v}})
+        # print(member_id)
+        # members.update_one({'id':k}, {'$set':{'CIN_count':v}})
+        members.update_one({'id':k}, {'$set':{'CIN_count':v}})
     return dict_CIN
     
 if __name__ == '__main__':
@@ -346,13 +348,12 @@ if __name__ == '__main__':
     sched = BackgroundScheduler(daemon=True)
     asia_seoul = datetime.datetime.fromtimestamp(time.time(), pytz.timezone('Asia/Seoul'))
     today = asia_seoul.strftime("%Y%m%d")
-    # 금요일 오후 11시 59분에 +1
-    sched.add_job(count, 'cron', hour="23", minute="59", id="test_1")
-    sched.add_job(getCountDict, 'cron', hour="23", minute="58", id="test_2", args=[today])
+    print(type(today))
+    sched.add_job(count, 'cron', hour="00", minute="00", id="test_1")
+    sched.add_job(getCountDict, 'cron', hour="23", minute="59", id="test_2", args=[today])
     sched.start()
 
-    from waitress import serve
-    serve(app, host="0.0.0.0", port=2017)
-    # app.run(host='0.0.0.0', port=2019)
-
+    #from waitress import serve
+    #serve(app, host="0.0.0.0", port=2017)
+    app.run(host='0.0.0.0', port=2019)
 
