@@ -15,27 +15,6 @@ import logging
 from apscheduler.schedulers.blocking import BlockingScheduler
 from apscheduler.schedulers.background import BackgroundScheduler
 
-sched = BackgroundScheduler(daemon=True)
-asia_seoul = datetime.datetime.fromtimestamp(time.time(), pytz.timezone('Asia/Seoul'))
-# print(asia_seoul.today().date())
-today = asia_seoul.strftime("%Y%m%d")
-
-
-def count():
-    asia_seoul = datetime.datetime.fromtimestamp(time.time(), pytz.timezone('Asia/Seoul'))
-    print(asia_seoul.today())
-    t = ['월요일', '화요일', '수요일', '목요일', '금요일', '토요일', '일요일']
-    now = t[asia_seoul.today().weekday()]
-    if now == '금요일':
-        members.update_many({}, {'$inc': {'weekly_count': 1}}) #collection에 있는 모든 id에서 count가 1씩 증가
-
-
-# sched.add_job(count, 'cron', hour="4", minute="50", id="test_1")
-# 금요일 오후 11시 59분에 +1
-sched.add_job(count, 'cron', hour="23", minute="59", id="test_1")
-
-sched.start()
-
 app = Flask(__name__)
 app.config['SECRET_KEY'] = "2019"
 app.config["MONGO_URI"] = "mongodb://localhost:27017/survey"
@@ -290,4 +269,24 @@ def window_pop():
 if __name__ == '__main__':
     # from waitress import serve
     # serve(app, host="0.0.0.0", port=2017)
+    sched = BackgroundScheduler(daemon=True)
+    asia_seoul = datetime.datetime.fromtimestamp(time.time(), pytz.timezone('Asia/Seoul'))
+    # print(asia_seoul.today().date())
+    today = asia_seoul.strftime("%Y%m%d")
+
+
+    def count():
+        asia_seoul = datetime.datetime.fromtimestamp(time.time(), pytz.timezone('Asia/Seoul'))
+        print(asia_seoul.today())
+        t = ['월요일', '화요일', '수요일', '목요일', '금요일', '토요일', '일요일']
+        now = t[asia_seoul.today().weekday()]
+        if now == '금요일':
+            members.update_many({}, {'$inc': {'weekly_count': 1}}) #collection에 있는 모든 id에서 count가 1씩 증가
+
+
+    # sched.add_job(count, 'cron', hour="4", minute="50", id="test_1")
+    # 금요일 오후 11시 59분에 +1
+    sched.add_job(count, 'cron', hour="23", minute="59", id="test_1")
+    sched.start()
+
     app.run(host='0.0.0.0', port=2019)
