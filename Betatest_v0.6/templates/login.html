@@ -41,13 +41,13 @@
 
 <body>
     <h1><b>KNIH</b></h1>
-    <h2>설문조사 로그인</h2>
+    <h3>설문조사 로그인</h3>
     <img id="image" src="../static/english.png" style="width:50px" onClick="location.href='/en'">
     <form action="/user/login" method="POST">
         <div>
             <label for="enter-login" style="text-align:center;">
                 S아이디<br>
-                S<input style="text-align: center;", placeholder="3자리 숫자" type="tel" id="Id" name="id" , maxlength="3" onkeyup="moveCursor(this)"  oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                <b>S</b><input style="text-align: center;", placeholder="3자리 숫자" type="tel" id="Id" name="id" , maxlength="3" onkeyup="moveCursor(this)"  oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
             </label>
         </div>
         <div>
