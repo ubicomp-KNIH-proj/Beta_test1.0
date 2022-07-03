@@ -35,7 +35,7 @@ def register():
     if request.method == 'GET':
         return render_template("register.html")
     else:
-        id = request.form.get("id", type=str)
+        id =  'S' + request.form.get("id", type=str)
         pwd = request.form.get("pwd", type=str)
         pwd2 = request.form.get("pwd2", type=str)
         
@@ -72,7 +72,7 @@ def register_en():
     if request.method == 'GET':
         return render_template("register_en.html")
     else:
-        id = request.form.get("id", type=str)
+        id = 'S' + request.form.get("id", type=str)
         pwd = request.form.get("pwd", type=str)
         pwd2 = request.form.get("pwd2", type=str)
         
@@ -138,7 +138,7 @@ def ajax():
 #로그인
 @app.route('/user/login', methods = ['POST'])
 def login():
-    id = request.form['id']
+    id = 'S' + request.form['id']
     pwd = request.form['pwd']
     #form에서 가져온 id를 세션에 저장
     session['id'] = id
