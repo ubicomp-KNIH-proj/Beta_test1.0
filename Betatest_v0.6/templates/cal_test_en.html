@@ -14,10 +14,10 @@
     <title>KNIH_Galaxy user</title>
     <style type="text/css">
         td {
-            width: 120px;
-            height: 120px;
+            width: 50px;
+            height: 50px;
             text-align: center;
-            font-size: 30px;
+            font-size: 20px;
             font-family: 굴림;
             border: 2px;
             border-color: #3333FF;
@@ -25,10 +25,10 @@
         }
 
         #etc {
-            background-color: #44afcf;
+            background-color: #bac9cd;
             font-family: Arial, sans-serif;
             padding: 20px 20px;
-            font-size: 20px;
+            font-size: 15px;
             height: 100%;
         }
     </style>
@@ -90,8 +90,8 @@
 </head>
 
 <body>
-    <h3 align="center" style="font-size: 40px;">{{sid}}</h3>
-    <h4 align="center" style="font-size: 40px;">Today Container count : {{cin}}</h4>
+    <h3 align="center" style="font-size: 30px;">{{sid}}</h3>
+    <h4 align="center" style="font-size: 30px;">Today Container count : {{cin}}</h4>
     <table id="calendar" border="3" align="center" style="border-color:#3333FF ">
         <tr>
             <td><label onclick="prevCalendar()">
@@ -118,12 +118,12 @@
         </tr>
     </table>
     <p id="etc" style="text-align: center">
-        A dropout is considered when data collection is 70% or less.<br>
-        If there is a date that could not be collected in the middle, <br>you can collect it on another date.<br>
-        If any data has been collected, please post it.<br>
+        1. A dropout is considered when data collection <br>is 70% or less.<br>
+        2. If there is a date that could not be collected <br> in the middle, <br>you can collect it on another date.<br>
+        3. If any data has been collected, please post it.<br>
         <br>
-        For inquiries, <br>please contact the 'smartphone/smartwatch activity data collection'<br>
-        open chat room or 010-2490-5530.
+        <==============================><br>
+        For inquiries, please contact <br>the 'smartphone/smartwatch activity data collection' open chat room <br>or '010-2490-5530'.
     </p>
     <button onclick="toDaily()" id="submit_btn" class="btn btn-primary" style="width: 100%;"
         data-target="#result">Confirm</button>
