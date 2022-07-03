@@ -18,7 +18,7 @@
 	$(document).ready(function () {
 		$("#submit").click(function () {
 			if ($(':radio[name="mood"]:checked').length < 1) {
-				alert("답변을 입력해주세요");
+				alert("답변을 입력해주세요"); 
 				$('#mood1').focus();
 				event.preventDefault();
 			}
