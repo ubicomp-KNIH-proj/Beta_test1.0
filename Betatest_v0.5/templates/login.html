@@ -27,15 +27,9 @@
 </head>
 <script type="text/javascript">
     function moveCursor(textbox) {
-        if (textbox.value.length == 4) {
+        if (textbox.value.length == 3) {
             document.getElementById("Pwd").focus();
         }
-        // if (textbox.value >= 0 || textbox.value <=9) {
-        //     return true; 
-        // } else {
-        //     return false;
-        // }
-
     }
     $(document).ready(function () {
         $("#submit").click(function () {
@@ -50,15 +44,15 @@
     <h2>설문조사 로그인</h2>
     <form action="/user/login" method="POST">
         <div>
-            <label for="enter-login">
-                S아이디
-                S<input type="tel" id="Id" name="id" , value="S" maxlength="4" onkeyup="moveCursor(this)">
+            <label for="enter-login" style="text-align:center;">
+                S아이디<br>
+                S<input style="text-align: center;", placeholder="3자리 숫자" type="tel" id="Id" name="id" , maxlength="3" onkeyup="moveCursor(this)"  oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
             </label>
         </div>
         <div>
         <label for="enter-pwd">
             비밀번호
-            <input type="password" id="Pwd" name="pwd" , placeholder="Password">
+            <input style="text-align: center;" type="password" id="Pwd" name="pwd" , placeholder="Password">
         </label>
     </div>
     <div>
