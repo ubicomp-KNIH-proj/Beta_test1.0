@@ -149,36 +149,60 @@ def login():
         return render_template('login.html')
     else:
         member_id = members.find_one({'id': id})
-        if member_id['pwd'] == pwd:
-            count = member_id['submit_count']
-            fcount = member_id['attach_count']
-            wcount = member_id['weekly_count']
-            asia_seoul = datetime.datetime.fromtimestamp(time.time(), pytz.timezone('Asia/Seoul'))
-            t = ['월요일', '화요일', '수요일', '목요일', '금요일', '토요일', '일요일']
-            now = t[asia_seoul.today().weekday()]
-
-            if now == "금요일":
-                members.update_one({'id': id}, {'$inc': {'weekly_count': -1}}) #토요일 로그인 -> count가 1씩 감소
-                return render_template('weekly.html', sid=id, cnt=count, fcnt=fcount, wcnt=wcount)
+        if member_id['pwd'] == pwd: #비밀번호가 맞는지 확인
+            daily_cal = member_id["daily"]
+            cin_count = member_id["CIN_count"]
+            print(daily_cal)
+            if daily_cal == 1 : #갤럭시 사용자
+                return render_template('cal_test.html', sid=id, cin=cin_count)
             else:
-                if member_id['weekly_count'] > 0:
-                    return render_template('weekly.html', sid=id, cnt=count, fcnt=fcount, wcnt=wcount)
-                else:
-                    if member_id['daily'] == 1:
-                        return render_template('gal_daily.html', sid=id, cnt=count, fcnt=fcount, wcnt=wcount)
+                if daily_cal == 2: #아이폰 사용자
+                    count = member_id['submit_count']
+                    fcount = member_id['attach_count']
+                    wcount = member_id['weekly_count']
+                    asia_seoul = datetime.datetime.fromtimestamp(time.time(), pytz.timezone('Asia/Seoul'))
+                    t = ['월요일', '화요일', '수요일', '목요일', '금요일', '토요일', '일요일']
+                    now = t[asia_seoul.today().weekday()]
+
+                    if now == "토요일":
+                        members.update_one({'id': id}, {'$inc': {'weekly_count': -1}}) #토요일 로그인 -> count가 1씩 감소
+                        return render_template('weekly.html', sid=id, cnt=count, fcnt=fcount, wcnt=wcount)
                     else:
-                        if member_id['daily'] == 2:
-                            return render_template('daily.html', sid=id, cnt=count, fcnt=fcount, wcnt=wcount)
-            
-            # if count == 0: 
-            #     return render_template('daily.html', sid=id, cnt=count, fcnt=fcount)
-            # elif count % 7 == 0:
-            #     return render_template('weekly.html', sid=id, cnt=count, fcnt=fcount)
-            # elif count % 7 != 0:
-            #     return render_template('daily.html', sid=id, cnt=count, fcnt=fcount)
-        else:
+                        if member_id['weekly_count'] > 0:
+                            return render_template('weekly.html', sid=id, cnt=count, fcnt=fcount, wcnt=wcount)
+                        else:
+                            if member_id['daily'] == 1:
+                                return render_template('gal_daily.html', sid=id, cnt=count, fcnt=fcount, wcnt=wcount)
+                            else:
+                                if member_id['daily'] == 2:
+                                    return render_template('daily.html', sid=id, cnt=count, fcnt=fcount, wcnt=wcount)                    
+        else: #비밀번호가 틀리면
             flash('비밀번호가 일치하지 않습니다.')
             return render_template('login.html')
+
+#갤럭시 사용자 - 캘린더 보여주기 
+# @app.route('/cal', methods = ['POST'])
+# def cal():
+#     member_id = members.find_one({'id': id})
+#     count = member_id['submit_count']
+#     fcount = member_id['attach_count']
+#     wcount = member_id['weekly_count']
+#     asia_seoul = datetime.datetime.fromtimestamp(time.time(), pytz.timezone('Asia/Seoul'))
+#     t = ['월요일', '화요일', '수요일', '목요일', '금요일', '토요일', '일요일']
+#     now = t[asia_seoul.today().weekday()]
+
+#     if now == "금요일":
+#         members.update_one({'id': id}, {'$inc': {'weekly_count': -1}}) #토요일 로그인 -> count가 1씩 감소
+#         return render_template('weekly.html', sid=id, cnt=count, fcnt=fcount, wcnt=wcount)
+#     else:
+#         if member_id['weekly_count'] > 0:
+#             return render_template('weekly.html', sid=id, cnt=count, fcnt=fcount, wcnt=wcount)
+#         else:
+#             if member_id['daily'] == 1:
+#                 return render_template('gal_daily.html', sid=id, cnt=count, fcnt=fcount, wcnt=wcount)
+#             else:
+#                 if member_id['daily'] == 2:
+#                     return render_template('daily.html', sid=id, cnt=count, fcnt=fcount, wcnt=wcount)    
 
 
 #로그아웃
@@ -297,8 +321,8 @@ IoT_1 = "http://114.71.220.59:7579"
 def countCIN(serverName, aeName, today):
     # asia_seoul = datetime.datetime.fromtimestamp(time.time(), pytz.timezone('Asia/Seoul'))
     # today = asia_seoul.strftime("%Y%m%d")
-    cra = '&cra=' + today + 'T000000'
-    crb = '&crb=' + today + 'T235959'
+    cra = '&cra=' + str(int(today) - 1) + 'T150000'
+    crb = '&crb=' + today + 'T145959'
     
     url1 = IoT_1 + "/Mobius/" + aeName + "/mobile?fu=1&ty=4&rcn=4" + cra + crb
     url2 = IoT_1 + "/Mobius/" + aeName + "/watch?fu=1&ty=4&rcn=4"  + cra + crb
@@ -356,4 +380,3 @@ if __name__ == '__main__':
     #from waitress import serve
     #serve(app, host="0.0.0.0", port=2017)
     app.run(host='0.0.0.0', port=2019)
-
