@@ -20,7 +20,7 @@
 </head>
 <script type="text/javascript">
     function moveCursor(textbox) {
-        if (textbox.value.length == 4) {
+        if (textbox.value.length == 3) {
             document.getElementById("pw1").focus();
         }
     }
@@ -47,23 +47,23 @@
     <img id="image" src="../static/english.png" style="width:50px" onClick="location.href='/register_en'">
     <form id="s1" name="form" action="/register" method="POST" onsubmit="return jbSubmit();">
         <div>
-            <label for="id">
-                아이디
-                <input type="tel" name="id" , value="S" maxlength="4" id="id" onkeyup="moveCursor(this)">
+            <label for="id" style="text-align:center;">
+                아이디<br>
+                S<input style="width: 60%; text-align: center;", placeholder="3자리 숫자" type="tel", name="id" , maxlength="3" id="id" onkeyup="moveCursor(this)" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
             </label>
         </div>
         <hr>
         <div>
-            <label for="pw1">
+            <label for="pw1" style="text-align:center;">
                 비밀번호
                 <input type="password" id="pw1" name="pwd" , placeholder="Password">
             </label>
         </div>
         <hr>
         <div>
-            <label for="pw2">
+            <label for="pw2"  style="text-align:center;">
                 비밀번호 확인
-                <input type="password" id="pw2" name="pwd2" , placeholder="Password 확인">
+                <input  type="password" id="pw2" name="pwd2" , placeholder="Password 확인">
             </label>
         </div>
         <hr>
