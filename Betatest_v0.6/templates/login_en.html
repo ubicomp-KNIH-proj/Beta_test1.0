@@ -41,13 +41,13 @@
 
 <body>
     <h1><b>KNIH</b></h1>
-    <h2>Login Survey</h2>
-    <img id="image" src="../static/english.png" style="width:50px" onClick="location.href='/'">
+    <h3>Login Survey</h3>
+    <img id="image" src="../static/english_b.png" style="width:50px" onClick="location.href='/'">
     <form action="/user/login_en" method="POST">
         <div>
             <label for="enter-login" style="text-align:center;">
                 SID<br>
-                S<input style="text-align: center;", placeholder="3 digit number" type="tel" id="Id" name="id" , maxlength="3" onkeyup="moveCursor(this)"  oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+                <b>S</b><input style="text-align: center;", placeholder="3 digit number" type="tel" id="Id" name="id" , maxlength="3" onkeyup="moveCursor(this)"  oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
             </label>
         </div>
         <div>
