@@ -14,10 +14,10 @@
     <title>KNIH_Galaxy user</title>
     <style type="text/css">
         td {
-            width: 120px;
-            height: 120px;
+            width: 50px;
+            height: 50px;
             text-align: center;
-            font-size: 30px;
+            font-size: 20px;
             font-family: 굴림;
             border: 2px;
             border-color: #3333FF;
@@ -25,10 +25,10 @@
         }
 
         #etc {
-            background-color: #44afcf;
+            background-color: #bac9cd;
             font-family: Arial, sans-serif;
             padding: 20px 20px;
-            font-size: 20px;
+            font-size: 15px;
             height: 100%;
         }
     </style>
@@ -90,8 +90,8 @@
 </head>
 
 <body>
-    <h3 align="center" style="font-size: 40px;">{{sid}}</h3>
-    <h4 align="center" style="font-size: 40px;">오늘 Container 개수 : {{cin}}</h4>
+    <h3 align="center" style="font-size: 30px;">{{sid}}</h3>
+    <h4 align="center" style="font-size: 30px;">오늘 Container 개수 : {{cin}}</h4>
     <table id="calendar" border="3" align="center" style="border-color:#3333FF ">
         <tr>
             <td><label onclick="prevCalendar()">
@@ -118,12 +118,13 @@
         </tr>
     </table>
     <p id="etc" style="text-align: center">
-        데이터 수집이 70% 이하인 경우에는 중도 탈락으로 간주합니다.<br>
-        중간에 수집 못한 날짜가 있으면 다른 날짜에 수집해도 됩니다.<br>
-        일부라도 수집되었으면 올려주세요.<br>
+        1. 데이터 수집이 70% 이하인 경우에는 <br>중도 탈락으로 간주합니다.<br>
+        2. 중간에 수집 못한 날짜가 있으면 <br>다른 날짜에 수집해도 됩니다.<br>
+        3. 일부라도 수집되었으면 올려주세요.<br>
         <br>
-        문의사항은 '스마트폰/스마트워치 활동 데이터 수집' 오픈채팅방 또는<br>
-        010-2490-5530으로 연락주세요.
+        <==============================><br>
+        문의사항은 <br>'스마트폰/스마트워치 활동 데이터 수집' 오픈채팅방 <br>또는
+        '010-2490-5530'으로 연락주세요.
     </p>
     <button onclick="toDaily()" id="submit_btn" class="btn btn-primary" style="width: 100%;"
         data-target="#result">확인</button>
