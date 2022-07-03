@@ -29,6 +29,11 @@ db = client['survey']
 def home():
    return render_template('login.html')
 
+#홈화면
+@app.route('/en')
+def home_en():
+   return render_template('login_en.html')
+
 # 회원가입
 @app.route('/register', methods=['GET','POST'])
 def register():
@@ -88,19 +93,19 @@ def register_en():
             "CIN_count": 0
         }
         if id in mongo.db.list_collection_names() :
-            flash("이미 가입한 계정이 있습니다.")
-            return render_template("register.html", data=id)
+            flash("Already signed up for an account. Please check again!")
+            return render_template("register_en.html", data=id)
         else :
             #회원가입시 컬렉션 생성
             mongo.db.create_collection(id)  
         
         if not (id and pwd and pwd2):
-            return "모두 입력해주세요"
+            return "Please enter all"
         elif pwd != pwd2:
-            return "비밀번호를 확인해주세요."
+            return "Please check password"
         else:
             members.insert_one(post)
-            return render_template("one_time.html", data=id)
+            return render_template("one_time_en.html", data=id)
 
 
 @app.route('/ajax', methods=['GET', 'POST'])
@@ -152,7 +157,7 @@ def login():
         if member_id['pwd'] == pwd: #비밀번호가 맞는지 확인
             daily_cal = member_id["daily"]
             cin_count = member_id["CIN_count"]
-            print(daily_cal)
+            # print(daily_cal)
             if daily_cal == 1 : #갤럭시 사용자
                 return render_template('cal_test.html', sid=id, cin=cin_count)
             else:
@@ -284,6 +289,12 @@ def final():
     session.pop('id', None)
     return render_template("final.html")
 
+#마지막 페이지
+@app.route('/final_en', methods=['GET', 'POST'])
+def final_en():
+    session.pop('id', None)
+    return render_template("final_en.html")
+
 #weekly survey
 @app.route('/weekly', methods=['GET', 'POST'])
 def weekly():
@@ -302,10 +313,49 @@ def weekly():
         if member_id['daily'] == 2:
             return jsonify(render_template("daily.html", sid=x_survey, cnt=count, fcnt=fcount))
 
+@app.route('/ajax3', methods=['GET', 'POST'])
+def ajax3():
+    data = request.get_json()
+    x_survey = list(data.values())[0]
+    #회원가입한 id와 같은 이름의 컬렉션 찾기
+    #list()함수 이용해서 첫 번째 키 가져오기(id 값)
+    member_id = members.find_one({'id': x_survey})
+    count = member_id['submit_count']
+    fcount = member_id['attach_count']
+    wcount = member_id["weekly_count"]
+    asia_seoul = datetime.datetime.fromtimestamp(time.time(), pytz.timezone('Asia/Seoul'))
+    t = ['월요일', '화요일', '수요일', '목요일', '금요일', '토요일', '일요일']
+    now = t[asia_seoul.today().weekday()]
+    if now == "토요일":
+        members.update_one({'id': x_survey}, {'$inc': {'weekly_count': -1}}) #토요일 로그인 -> count가 1씩 감소
+        return jsonify(render_template('weekly.html', sid=x_survey, cnt=count, fcnt=fcount, wcnt=wcount))
+    else:
+        if member_id['weekly_count'] > 0:
+            return jsonify(render_template('weekly.html', sid=x_survey, cnt=count, fcnt=fcount, wcnt=wcount))
+        else:
+            if member_id['daily'] == 1:
+                return jsonify(render_template('gal_daily.html', sid=x_survey, cnt=count, fcnt=fcount, wcnt=wcount))
+            else:
+                if member_id['daily'] == 2:
+                    return jsonify(render_template('weekly.html', sid=x_survey, cnt=count, fcnt=fcount, wcnt=wcount))
+
+
+
+    # data = request.get_data()
+    # print(data) 
+    # d = request.get_json()
+    # print(d)
+    # return jsonify(render_template("daily.html"))
+    
 #팝업창
 @app.route('/pop.html', methods=['GET'])
 def window_pop():
     return render_template("pop.html")
+
+#팝업창
+@app.route('/pop_en.html', methods=['GET'])
+def window_pop_en():
+    return render_template("pop_en.html")
 
 #백그라운드 실행-토요일마다
 asia_seoul = datetime.datetime.fromtimestamp(time.time(), pytz.timezone('Asia/Seoul'))
@@ -363,7 +413,7 @@ def getCountDict(today):
             
     for k,v in dict_CIN.items():
         k=str(k)
-        print(v)
+        # print(v)
         # print("{}:{}".format(k,v))
         member_id = members.find_one({'id': k})
         # print(member_id)
