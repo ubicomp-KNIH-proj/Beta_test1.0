@@ -1,0 +1,488 @@
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <script>
+        alert("{{messages[-1]}}")
+    </script>
+    {% endif %}
+{% endwith %}
+
+<!DOCTYPE html>
+<html lang="kr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" >
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <link rel="stylesheet" href="../static/style.css" type="text/css">
+    <script src="http://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+        crossorigin="anonymous"></script>
+    <title> 
+        [KNIH] AT SCH Univ.
+    </title>
+</head>
+<script type="text/javascript">
+    function showPopup() { window.open("pop.html", "a", "width=400, height=300, left=100, top=50"); }
+    function moveCursora(tel) {
+        if (tel.value.length == 3) {
+            document.getElementById("phonenum1").focus();
+        }
+    }
+    function moveCursorb(telbox) {
+        if (telbox.value.length == 4) {
+            document.getElementById("phonenum2").focus();
+        }
+    }
+
+    $(document).ready(function () {
+        $('.activation').on('click', function () {
+            var valueCheck = $('.activation:checked').val();
+            if (valueCheck == '1') {
+                $('.active').attr('disabled', false); 
+                $('.active').focus(); 
+            } else {
+                $('.active').attr('disabled', true); 
+                $("input:radio[name='q9']").prop('checked', false)
+            }
+        });
+        $('#submit_button').on('click', function() {
+            var q2 = document.getElementsByName("q2");
+            if(!q2[0].checked) {
+                q2[0].focus()
+                return false
+            }
+        })
+    });
+    function limitNumber(el, maxlength) {
+        if (el.value.length > maxlength) {
+            el.value = el.value.substr(0, maxlength);
+        }
+    }
+</script>
+<!-- //////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+<body>
+    <h1>One-Time Survey</h1>
+    <h2>생활 습관</h2>
+
+    <form id="form1">
+        <div class="form-control">
+			<label for="q1" id="label-q1">
+                1. 핸드폰 번호를 입력해주세요
+            </label>
+            <input type="tel" id="phonenum" maxlength="3" onkeyup="moveCursora(this)" placeholder="010" name="q1-1" required/> -
+            <input type="tel" id="phonenum1" maxlength="4" onkeyup="moveCursorb(this)" placeholder="1234" name="q1-2" required/> -
+            <input type="tel" id="phonenum2" maxlength="4" placeholder="5678" name="q1-3" required/>
+        </div>
+        <br>
+
+        <div class="form-control">
+			<label for="q2" id="label-q2">
+                2. 스마트폰 종류를 선택해주세요
+            </label>
+            <label for="q2-1">
+                <input type="radio" id="q2-1" name="q2" value="1" checked>갤럭시</input>
+            </label>
+            <label for="q2-2">
+                <input type="radio" id="q2-2" name="q2" value="2">아이폰</label>
+            </label>
+        </div>
+        <br>
+
+        <div class="form-control">
+            <label for="q3" id="label-q3">
+                3. 스마트밴드 종류를 선택해주세요
+            </label>
+            <label for="q3-1">
+                <input type="radio" id="q3-1" name="q3" value="1" checked>갤럭시워치</input>
+            </label>
+            <label for="q3-2">
+                <input type="radio" id="q3-2" name="q3" value="2">핏빗</label>
+            </label>
+        </div>
+        <br>
+
+        <div class="form-control">
+			<label for="q4" id="label-q4">
+            4. 출생년도를 입력해주세요
+            </label>
+            <input type="tel" id="age" maxlength="4" placeholder="1999" name="q4" oninput="limitNumber(this, 4)" required/>
+        </div>
+        <br>
+
+        <div class="form-control">
+            <label for="q5" id="label-q5">
+                5. 성별을 선택해주세요
+            </label>
+            <label for="q5-1">
+                <input type="radio" id="q5-1" name="q5" value="1" checked>남자</input>
+            </label>
+            <label for="q5-2">
+                <input type="radio" id="q5-2" name="q5" value="2">여자</label>
+            </label>
+        </div>
+        <br>
+
+        <div class="form-control">
+			<label for="q6" id="label-q6">
+                6. 신장을 선택해주세요
+            </label>
+			<label for="q6-1">
+                <input  type="radio" id="q6-1" name="q6" value="1" checked/>
+                150 이하</input>
+            </label>
+			<label for="q6-2">
+                <input  type="radio" id="q6-2" name="q6" value="2"/>
+                150 초과 160 이하</input>
+            </label>
+            <label for="q6-3">
+                <input  type="radio" id="q6-3" name="q6" value="3"/>
+                160 초과 170 이하</input>
+            </label>
+            <label for="q6-4">
+                <input  type="radio" id="q6-4" name="q6" value="4"/>
+                170 초과 180 이하</input>
+            </label>
+            <label for="q6-5">
+                <input  type="radio" id="q6-5" name="q6" value="5"/>
+                180 초과</input>
+            </label>
+        </div>
+        <br>
+
+        <div class="form-control">
+			<label for="q7" id="label-q7">
+                7. 체중을 선택해주세요
+            </label>
+			<label for="q7-1">
+                <input  type="radio" id="q7-1" name="q7" value="1" checked/>
+                50 이하</input>
+            </label>
+			<label for="q7-2">
+                <input  type="radio" id="q7-2" name="q7" value="2"/>
+                50 초과 60 이하</input>
+            </label>
+            <label for="q7-3">
+                <input  type="radio" id="q7-3" name="q7" value="3"/>
+                60 초과 70 이하</input>
+            </label>
+			<label for="q7-4">
+                <input  type="radio" id="q7-4" name="q7" value="4"/>
+                70 초과 80 이하</input>
+            </label>
+			<label for="q7-5">
+                <input  type="radio" id="q7-5" name="q7" value="5"/>
+                80 초과</input>
+            </label>
+        </div>
+        <br>
+
+        <div class="form-control">
+            <label for="q8" id="label-q8">
+                8. 당신은 큰소리로 코를 곤다는 말을 들은적이 있습니까?
+            </label>
+            <label for="q8-1">
+                <input type="radio" class="activation" name="q8" id="q8-1" value="1" checked>예(9번 문항으로 이동)</input>
+            </label>
+            <label for="q8-2">
+                <input type="radio" class="activation" name="q8" id="q8-2" value="2">아니오(10번 문항으로 이동)</input>
+            </label>    
+        </div>
+        <br>
+        <!-- 만약 코골이를 한다면 -->
+        <div class="form-control">
+			<label for="q9" id="label-q9">
+                9. Q8에서 '예'로 응답한 경우, 당신은 얼마나 자주 코를 고십니까?
+            </label>
+			<label for="q9-1">
+                <input type="radio" class="active" name="q9" id="q9-1" value="1"/>
+                거의 없음</input>
+            </label>
+			<label for="q9-2">
+                <input type="radio" class="active" name="q9" id="q9-2" value="2"/>
+                1 - 3회 (월)</input>
+            </label>
+			<label for="q9-3">
+                <input type="radio" class="active" name="q9" id="q9-3" value="3"/>
+                1 - 3회 (주)</input>
+            </label>
+			<label for="q9-4">
+                <input type="radio" class="active" name="q9" id="q9-4" value="4"/>
+                4 - 5회 (주)</input>
+            </label>
+			<label for="q9-5">
+                <input type="radio" class="active" name="q9" id="q9-5" value="5"/>
+                거의 매일 (주 6회 이상)</input>
+            </label>
+        </div>
+        <br>
+        <!-- 활동 상태 확인 (팝업창) -->
+        <div class="form-control">
+			<label for="q10" id="label-q10">
+                10. 귀하의 평소 활동 상태는 어떠십니까?
+            </label>
+            <input type="button" value="상세 보기" onclick="showPopup();" />
+			<label for="q10-1">
+                <input type="radio" name="q10" id="q10-1" value="1" checked/>
+                비활동적</input>
+            </label>
+			<label for="q10-2">
+                <input type="radio" name="q10" id="q10-2" value="2" />
+                저활동적</input>
+            </label>
+			<label for="q10-3">
+                <input type="radio" name="q10" id="q10-3" value="3"/>
+                활동적</input>
+            </label>
+			<label for="q10-4">
+                <input type="radio" name="q10" id="q10-4" value="4"/>
+                매우 활동적</input>
+            </label>
+        </div>
+    </form>
+
+    <!-- ///////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+    <!-- 정신 건강 설문 조사 -->
+    <h2>정신 건강</h2>
+
+	<form id="form2">
+		<div class="form-control">
+			<label for="mq1" id="label-mq1">
+                1. 현재 귀하의 건강상태가 어떻다고 생각하십니까?
+            </label>
+			<label for="mq1-1">
+                <input type="radio" name="mq1" id="mq1-1" name="mq1" value="5" checked/>
+                매우 건강하다</input>
+            </label>
+			<label for="mq1-2">
+                <input type="radio" name="mq1" id="mq1-2" name="mq1" value="4"/>
+                건강하다</input>
+            </label>
+			<label for="mq1-3">
+                <input type="radio" name="mq1" id="mq1-3" name="mq1" value="3"/>
+                보통이다</input>
+            </label>
+			<label for="mq1-4">
+                <input type="radio" name="mq1" id="mq1-4" name="mq1" value="2"/>
+                건강하지 못하다</input>
+            </label>
+            <label for="mq1-5">
+                <input type="radio" name="mq1" id="mq1-5" name="mq1" value="1"/>
+                매우 건강하지 못하다</input>
+            </label>
+        </div>
+        <br>
+        <div class="form-control">
+			<label for="mq2" id="label-mq2">
+                2. 현재 귀하의 경제상황이 어떻다고 생각하십니까?
+            </label>
+			<label for="mq2-1">
+                <input type="radio" name="mq2" id="mq2-1" value="4" checked/>
+                여유가 있다
+            </label>
+			<label for="mq2-2">
+                <input type="radio" name="mq2" id="mq2-2" value="3"/>
+                지낼만 하다
+            </label>
+			<label for="mq2-3">
+                <input type="radio" name="mq2" id="mq2-3" value="2"/>
+                조금 어려운 편이다
+            </label>
+			<label for="mq2-4">
+                <input type="radio" name="mq2" id="mq2-4" value="1"/>
+                매우 어렵다
+            </label>
+        </div>
+        <br>
+
+        <div class="form-control">
+			<label for="mq3" id="label-mq3">
+                3. 최근 안절부절 못하거나 성질이 심술궂게 되어진다
+            </label>
+			<label for="mq3-1">
+                <input type="radio"name="mq3" id="mq3-1" value="1" checked/>
+                전혀 그렇지 않다
+            </label>
+			<label for="mq3-2">
+                <input type="radio" name="mq3" id="mq3-2" value="2"/>
+                약간 그렇다
+            </label>
+			<label for="mq3-3">
+                <input type="radio" name="mq3" id="mq3-3" value="3"/>
+                대부분 그렇다
+            </label>
+			<label for="mq3-4">
+                <input type="radio" name="mq3" id="mq3-4" value="4"/>
+                항상 그렇다
+            </label>
+        </div>
+        <br>
+        <div class="form-control">
+			<label for="mq4" id="label-mq4">
+                4. 최근 불행하고 우울감을 느낀다
+            </label>
+			<label for="mq4-1">
+                <input type="radio" name="mq4" id="mq4-1" value="1" checked/>
+                전혀 그렇지 않다
+            </label>
+			<label for="mq4-2">
+                <input type="radio" name="mq4" id="mq4-2" value="2"/>
+                약간 그렇다
+            </label>
+			<label for="mq4-3">
+                <input type="radio" name="mq4" id="mq4-3" value="3"/>
+                대부분 그렇다
+            </label>
+			<label for="mq4-4">
+                <input type="radio" name="mq4" id="mq4-4" value="4"/>
+                항상 그렇다
+            </label>
+        </div>
+        <br>
+
+        <div class="form-control">
+			<label for="mq5" id="label-mq5">
+                5. 최근 나 자신에 대한 신뢰감이 없어지고 있다
+            </label>
+			<label for="mq5-1">
+                <input type="radio" name="mq5" id="mq5-1" value="1" checked/>
+                전혀 그렇지 않다
+            </label>
+			<label for="mq5-2">
+                <input type="radio" name="mq5" id="mq5-2" value="2"/>
+                약간 그렇다
+            </label>
+			<label for="mq5-3">
+                <input type="radio" name="mq5" id="mq5-3" value="3"/>
+                대부분 그렇다
+            </label>
+			<label for="mq5-4">
+                <input type="radio" name="mq5" id="mq5-4" value="4"/>
+                항상 그렇다
+            </label>
+        </div>
+        <br>
+        <div class="form-control">
+            <label for="mq6" id="label-mq6">
+                6. 최근 모든 것을 고려해 볼 때 행복감을 느낀다
+            </label>
+            <label for="mq6-1">
+                <input type="radio" name="mq6" id="mq6-1" value="1" checked/>
+                전혀 그렇지 않다
+            </label>
+            <label for="mq6-2">
+                <input type="radio" name="mq6" id="mq6-2" value="2"/>
+                약간 그렇다
+            </label>
+            </label>
+            <label for="mq6-3">
+                <input type="radio" name="mq6" id="mq6-3" value="3"/>
+                대부분 그렇다
+            </label>
+            <label for="mq6-4">
+                <input type="radio" name="mq6" id="mq6-4" value="4"/>
+                항상 그렇다
+            </label>
+        </div>
+        <br>
+
+        <div class="form-control">
+			<label for="mq7" id="label-mq7">
+                7. 최근 세상에 홀로 있는 듯한 외로움을 느낀다
+            </label>
+			<label for="mq7-1">
+                <input type="radio" name="mq7" id="mq7-1" value="1" checked/>
+                전혀 그렇지 않다
+            </label>
+			<label for="mq7-2">
+                <input type="radio" name="mq7" id="mq7-2" value="2"/>
+                약간 그렇다
+            </label>
+			<label for="mq7-3">
+                <input type="radio" name="mq7" id="mq7-3" value="3"/>
+                대부분 그렇다
+            </label>
+			<label for="mq7-4">
+                <input type="radio" name="mq7" id="mq7-4" value="4"/>
+                항상 그렇다
+            </label>
+        </div>
+    </form>
+        
+    <button onclick="final()" id="submit_button" class="btn btn-primary" style="width: 100%;" data-target="#result">제출하기</button>
+	
+    <script>
+        let ID= '{{data}}'
+        function final() {
+            var r = document.querySelector('input[type=radio][name=q8]:checked')
+            var chk = "0";
+            var con = true;
+            if(document.getElementsByName("q1-1")[0].value=="") {
+				alert("1번 문항을 입력하세요")
+                con = false;
+				document.getElementsByName("q1-1")[0].focus()
+			}
+            else if(document.getElementsByName("q1-2")[0].value=="") {
+				alert("1번 문항을 입력하세요.")
+				document.getElementsByName("q1-2")[0].focus()
+                con = false;
+			}
+            else if(document.getElementsByName("q1-3")[0].value=="") {
+				alert("1번 문항을 입력하세요.")
+				document.getElementsByName("q1-3")[0].focus()
+                con = false;
+			}
+            else if(document.getElementsByName("q4")[0].value=="") {
+				alert("4번 문항을 입력하세요.")
+				document.getElementsByName("q4")[0].focus()
+                con = false;
+			}
+            else if(r.value=="1") {
+                var e = document.getElementsByName('q9');
+                for (var i=0; i < 5; i++) {
+                    if (e[i].checked == true) {
+                        chk = e[i].value;
+                    }
+                }
+                if (chk == "0") {
+                    alert("9번 문항을 입력하세요")
+				    document.getElementsByName("q9")[0].focus()
+                    con = false;
+                }
+                else {
+                    con = true;
+                }
+			}
+            else {
+                con = true;
+            }
+            if (con == true) {
+                document.getElementById("submit_button").innerHTML = "제출 완료";
+                var formData1 = $('#form1').serializeArray()
+                var formData2 = $('#form2').serializeArray()
+                var postdata = {
+                    ID, '1_formData1':formData1, '1_formData2':formData2
+                }
+                console.log(postdata)
+                $.ajax({
+                    type: 'POST',
+                    url: '{{url_for("ajax")}}',
+                    data: JSON.stringify(postdata),
+                    dataType : 'JSON',
+                    contentType: "application/json",
+                    success: function(data){
+                        // location.href="http://114.71.220.59:2017/final" #모비우스 서버에 이걸로
+                        location.href = "http://192.168.0.17:2019/final"
+                    },
+                    error: function(request, status, error){
+                        alert('ajax 통신 실패')
+                        alert(error);
+                    }
+                })
+
+            }
+
+            
+        }
+    </script>
+</body>
+</html>

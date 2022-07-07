@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="kr">
+
+<head>
+	<script src="https://code.jquery.com/jquery-latest.min.js"></script>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta http-equiv="Content-Type" content="text/html" charset="EUC-KR">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" >
+	<link rel="stylesheet" href="/static/style.css" type="text/css">
+	<script src="http://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+		crossorigin="anonymous"></script>
+	<title>
+		[KNIH] AT SCH Univ.
+	</title>
+	<script type="text/javascript">
+		function showPopup() { window.open("pop.html", "a", "width=400, height=300, left=100, top=50"); }
+		var q6_1 = document.getElementById('q6-1')
+		$(document).ready(function () {
+			$('#q6-1').on('click', function () {
+				$('.form-control .tg .tg-0lax .td_block').attr('disabled', true);
+			});
+			$('#q6-2').on('click', function () {
+				$('.form-control .tg .tg-0lax .td_block').attr('disabled', false);
+			});
+			$('#q7-1').on('click', function () {
+				$('.form-control .text_block').attr('disabled', true);
+			});
+			$('#q7-2').on('click', function () {
+				$('.form-control .text_block').attr('disabled', false);
+			});
+		});
+
+	</script>
+	<style type="text/css">
+		.tg {
+			border-spacing: 0;
+			font-size: 11px;
+			display: block;
+		}
+
+		.tg td {
+			border-color: black;
+			border-style: solid;
+			border-width: 1px;
+			font-family: Arial, sans-serif;
+			font-size: 11px;
+			overflow: hidden;
+			word-break: normal;
+		}
+
+		.tg th {
+			border-color: black;
+			border-style: solid;
+			border-width: 1px;
+			font-family: Arial, sans-serif;
+			font-size: 11px;
+			font-weight: normal;
+			overflow: hidden;
+			word-break: normal;
+		}
+
+		.tg .tg-0pky {
+			border-color: inherit;
+			text-align: center;
+			font-size: 11px;
+			padding: 5px 5px;
+		}
+
+		.tg .tg-0lax {
+			text-align: center;
+		}
+	</style>
+	<style>
+		html {
+			font-size: 25px;
+		}
+
+		body {
+			background-color: #c8e0e7;
+			font-family: Verdana;
+
+			text-align: center;
+		}
+
+		form {
+			background-color: #fff;
+			max-width: 700px;
+			margin: 50px auto;
+			padding: 10px 20px;
+			box-shadow: 2px 5px 10px rgba(38, 35, 35, 0.5);
+		}
+
+		textarea {
+			background-color: #c8e0e7;
+			font-family: Arial, sans-serif;
+			padding: 20px 20px;
+			font-size: 15px;
+		}
+
+		.form-control {
+			text-align: left;
+			margin-bottom: 25px;
+		}
+
+		.form-control label {
+			display: block;
+			margin-bottom: 10px;
+		}
+
+		.form-control input,
+		.form-control select,
+		.form-control textarea {
+			border: 1px solid #777;
+			border-radius: 2px;
+			font-family: inherit;
+			padding: 10px;
+			display: block;
+			width: 95%;
+		}
+
+		.form-control input[type="radio"],
+		.form-control input[type="checkbox"] {
+			display: inline-block;
+			width: auto;
+		}
+
+		button {
+			background-color: #ffffff;
+			border: 3px solid #97bbef;
+			border-radius: 2px;
+			font-family: inherit;
+			color: #97bbef;
+			font-size: 21px;
+			display: block;
+			width: 100%;
+			margin-top: 50px;
+			margin-bottom: 20px;
+		}
+	</style>
+</head>
+
+<body>
+	<h1>Weekly Survey</h1>
+	<h2>Lifestyle{{value}}</h2>
+
+	<form id="form1" name="form1">
+		<div class="form-control">
+			<label for="q1" id="label-q1">
+				1. In the past week, on average how many hours per day did you sleep (including naps)?
+			</label>
+
+			<input type='tel' id="phonenum" name="q1" />hour
+			<input type='tel' id="phonenum1" name="q1" />minute
+		</div>
+		<br>
+
+		<div class="form-control">
+			<label for="q2" id="label-q2">
+				2. Approximately what time did you go to bed and what time did you wake up during the past week? - Bedtime
+			</label>
+			<input type="time" id="input.timepicker" name="q2" />
+		</div>
+		<br>
+
+		<div class="form-control">
+			<label for="q3" id="label-q3" name="q3-q">
+				3. Approximately what time did you go to bed and what time did you wake up during the past week? - Wake up time
+			</label>
+			<input type="time" id="input.timepicker" name="q3" />
+		</div>
+		<br>
+
+		<div class="form-control">
+			<label for="q4" id="label-q4">
+				4. Are you currently having trouble falling asleep?
+			</label>
+			<label for="q4-1">
+				<input type="radio" id="q4-1" name="q4" value="1" checked>Not difficult</input>
+			</label>
+			<label for="q4-2">
+				<input type="radio" id="q4-2" name="q4" value="2">Sometimes difficult (1-2 days/week)</input>
+			</label>
+			<label for="q4-3">
+				<input type="radio" id="q4-3" name="q4" value="3">Often difficult (3-4 days/week)</input>
+			</label>
+			<label for="q4-4">
+				<input type="radio" id="q4-4" name="q4" value="4">Hard almost every day</input>
+			</label>
+		</div>
+		<br>
+		<div class="form-control">
+			<label for="q5" id="label-q5">
+				5. Do you currently have trouble falling back to sleep when you wake up?
+			</label>
+
+			<label for="q5-1">
+				<input type="radio" id="q5-1" name="q5" value="1" checked>Not difficult</input>
+			</label>
+			<label for="q5-2">
+				<input type="radio" id="q5-2" name="q5" value="2">Sometimes difficult (1-2 days/week)</input>
+			</label>
+			<label for="q5-3">
+				<input type="radio" id="q5-3" name="q5" value="3">Often difficult (1-2 days/week)</input>
+			</label>
+			<label for="q5-4">
+				<input type="radio" id="q5-4" name="q5" value="4">Hard almost every day</input>
+			</label>
+		</div>
+		<br>
+
+		<div class="form-control">
+			<label for="q6" label="label-q6">
+				6. 
+				If you exercise regularly enough to make your body sweat, what kind of exercise do you do?
+			</label>
+
+			<label for="q6-1">
+				<input type="radio" class="here" id="q6-1" name="q6" value="1" onclick="changeBg(this.value) ">Not exercising</input>
+			</label>
+			<label for="q6-2">
+				<input type="radio" id="q6-2" name="q6" value="2" checked>Exercising
+				<textarea style="text-align: center">Be sure to enter at least '1st' input field&#10;'2nd to 3rd' input field is optional.</textarea>
+				<table class="tg">
+					<thead>
+						<tr>
+							<th class="tg-0pky"></th>
+							<th class="tg-0pky">Sports</th>
+							<th class="tg-0pky">Frequency/week</th>
+							<th class="tg-0pky">Average amount of exercise per session</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td class="tg-0pky">1st</td>
+							<td class="tg-0lax">
+								<select name="q6-2-1" class="td_block"  id="q6-2-1" style="width:100%">
+									<option value="0">=== Select ===</option> 
+									<option value="달리기">Running</option>
+									<option value="경보">Heel-and-Toe walk</option>
+									<option value="등산">Mountain climbing</option>
+									<option value="헬스">Fitness (including home training)</option>
+									<option value="요가(또는 필라테스)">Yoga (or Pilates)</option>
+									<option value="자전거">Bicycle</option>
+									<option value="골프">Golf</option>
+								   </select>	
+							</td>
+							<td style="display:table-cell; width:25%;" class="tg-0lax">per week<div style="display:block"><input class="td_block"  style="text-align:center; display:block; margin: 0 auto; width: 50%;" name="q6-2-1(회)" id="q6-2-1" type='tel'/></div>times</td>
+							<td style="display:table-cell; width:25%;" class="tg-0lax"><div  style="display:block"><input class="td_block" style="text-align:center; display:block; margin: 0 auto; width: 50%;" name="q6-2-1(시)" id="q6-2-1" type='tel' /></div>hour
+								<div style="display:block"><input class="td_block" style="text-align:center; display:block; margin: 0 auto; width: 50%;" name="q6-2-1(분)" type='tel' id="time2" /></div>minutes</td>
+						</tr>
+						<tr>
+							<td class="tg-0pky" >2nd</td>
+							<td class="tg-0lax">
+								<select name="q6-2-2" class="td_block"  id="q6-2-2" style="width:100%">
+									<option value="0">=== Select ===</option> 
+									<option value="달리기">Running</option>
+									<option value="경보">Heel-and-Toe walk</option>
+									<option value="등산">Mountain climbing</option>
+									<option value="헬스">Fitness (including home training)</option>
+									<option value="요가(또는 필라테스)">Yoga (or Pilates)</option>
+									<option value="자전거">Bicycle</option>
+									<option value="골프">Golf</option>
+								</select>	
+							<td style="display:table-cell; width:25%;" class="tg-0lax">per week<div style="display:block"><input class="td_block" style="text-align:center; display:block; margin: 0 auto; width: 50%;" name="q6-2-2(회)" id="q6-2-2" type='tel'/></div>times
+							</td>
+							<td style="display:table-cell; width:25%;" class="tg-0lax"><div style="display:block"><input class="td_block" style="text-align:center; display:block; margin: 0 auto; width: 50%;" name="q6-2-2(시)" id="q6-2-2"
+								type='tel'/></div>hours
+								<div style="display:block"><input class="td_block" style="text-align:center; display:block; margin: 0 auto; width: 50%;" name="q6-2-2(분)" type='tel' id="time2" /></div>minutes</td>
+						</tr>
+						<tr>
+							<td class="tg-0pky">3rd</td>
+							<td class="tg-0lax">
+								<select name="q6-2-3" class="td_block"  id="q6-2-3" style="width:100%">
+									<option value="0">=== Select ===</option> 
+									<option value="달리기">Running</option>
+									<option value="경보">Heel-and-Toe walk</option>
+									<option value="등산">Mountain climbing</option>
+									<option value="헬스">Fitness (including home training)</option>
+									<option value="요가(또는 필라테스)">Yoga (or Pilates)</option>
+									<option value="자전거">Bicycle</option>
+									<option value="골프">Golf</option>
+								</select>
+							<td style="display:table-cell; width:25%;" class="tg-0lax">per week<div style="display:block"><input class="td_block" style="text-align:center; display:block; margin: 0 auto; width: 50%;" name="q6-2-3(회)" id="q6-2-3" type='tel' /></div>times</td>
+							<td style="display:table-cell; width:25%;" class="tg-0lax"><div style="display:block"><input class="td_block" style="text-align:center; display:block; margin: 0 auto; width: 50%;" name="q6-2-3(시)" type='tel' id="time1" /></div>hours
+								<div style="display:block"><input class="td_block" style="text-align:center; display:block; margin: 0 auto; width: 50%;" type='tel' name="q6-2-3(분)" id="time2" /></div>minutes</td>
+						</tr>
+					</tbody>
+				</table>
+				</input>
+			</label>
+		</div>
+		<br>
+		<div class="form-control">
+			<label for="q7" label="label-q7">
+				7. On average, how much do you walking exercise?
+			</label>
+			<label for="q7-1">
+				<input type="radio" id="q7-1" name="q7" value="1">no walking activity</input>
+			</label>
+			<label for="q7-2">
+				<input type="radio" id="q7-2" name="q7" value="2" checked>
+				<input type='tel' id="phonenum" name="q7-2" class="text_block" />times
+				<input type='tel' id="phonenum1" name="q7-2" class="text_block" />minutes
+			</label>
+		</div>
+		<br>
+		<div class="form-control">
+			<label for="q8" label="label-q8">
+				8. Aside from taking a walk, how much do you walk in a day in your daily life?
+			</label>
+			<input type='tel' id="phonenum" name="q8" />hours
+			<input type='tel' id="phonenum1" name="q8" />minutes
+		</div>
+		<br>
+		<div class="form-control" id="q9">
+			<label for="q9" label="label-q9">
+				9. How many floors do you go up and down in a day in your daily life?
+			</label>
+			<input type='tel' id="phonenum" id="floor" name="q9" />floors
+
+		</div>
+	</form>
+
+	<h2>Metal Health</h2>
+	<form id="form2">
+		<div class="form-control">
+			<label for="mq1" id="label-mq1">
+				1. During the past week, have you felt physically or mentally out of control?
+			</label>
+			<label for="mq1-1">
+				<input type="radio" id="mq1-1" name="mq1" value="1" checked>Never felt that way</input>
+			</label>
+			<label for="mq1-2">
+				<input type="radio" id="mq1-2" name="mq1" value="2">Sometimes felt that way</input>
+			</label>
+			<label for="mq1-3">
+				<input type="radio" id="mq1-3" name="mq1" value="3">Often felt that way</input>
+			</label>
+		</div>
+		<br>
+		<div class="form-control">
+			<label for="mq2" id="label-mq2">
+				2. Last week I feel very comfortable and healthy.
+			</label>
+			<label for="mq2-1">
+				<input type="radio" id="mq2-1" name="mq2" value="4" checked>Always felt that way</input>
+			</label>
+			<label for="mq2-2">
+				<input type="radio" id="mq2-2" name="mq2" value="3">Most felt that way</input>
+			</label>
+			<label for="mq2-3">
+				<input type="radio" id="mq2-3" name="mq2" value="2">Sometimes felt that way</input>
+			</label>
+			<label for="mq2-4">
+				<input type="radio" id="mq2-4" name="mq2" value="1">Never felt that way at all</input>
+			</label>
+		</div>
+		<br>
+		<div class="form-control">
+			<label for="mq3" id="label-mq3">
+				3. I don't feel refreshed after sleeping last week.
+			</label>
+
+			<label for="mq3-1">
+				<input type="radio" id="mq3-1" name="mq3" value="4" checked>Always</input>
+			</label>
+			<label for="mq3-2">
+				<input type="radio" id="mq3-2" name="mq3" value="3">Most</input>
+			</label>
+			<label for="mq3-3">
+				<input type="radio" id="mq3-3" name="mq3" value="2">Sometimes</input>
+			</label>
+			<label for="mq3-4">
+				<input type="radio" id="mq3-4" name="mq3" value="1">Never</input>
+			</label>
+		</div>
+		<br>
+		<div class="form-control">
+			<label for="mq4" id="label-mq4">
+				4. I've been having a hard time concentrating on whatever I've been doing over the past week.
+			</label>
+			<label for="mq4-1">
+				<input type="radio" id="mq4-1" name="mq4" value="4" checked>Always</input>
+			</label>
+			<label for="mq4-2">
+				<input type="radio" id="mq4-2" name="mq4" value="3">Most</input>
+			</label>
+			<label for="mq4-3">
+				<input type="radio" id="mq4-3" name="mq4" value="2">Sometimes</input>
+			</label>
+			<label for="mq4-4">
+				<input type="radio" id="mq4-4" name="mq4" value="1">Never</input>
+			</label>
+		</div>
+	</form>
+	<button onclick="final()" id="submit_button" class="btn btn-primary" style="width: 100%;"
+		data-target="#result">Submit</button>
+
+	<script>
+		let q1 = document.getElementById('phonenum');
+		let ID = '{{sid}}'
+		let wcnt = '{{wcnt}}'
+		function final() {
+			if(document.getElementsByName("q1")[0].value=="") {
+				alert("Please enter question 1")
+				document.getElementsByName("q1")[0].focus()
+			}
+			else if(document.getElementsByName("q1")[1].value=="") {
+				alert("Please enter question 1")
+				document.getElementsByName("q1")[1].focus()
+			}
+			else if(document.getElementsByName("q2")[0].value=="") {
+				alert("Please enter question 2")
+			}
+			else if(document.getElementsByName("q3")[0].value=="") {
+				alert("Please enter question 3")
+			}
+			// else if(document.getElementsByName("q7")[0].value=="2") {
+			// 	if (document.getElementsByName("q7-2")[0].value=="") {
+			// 		alert("7번")
+			// 		document.getElementsByName("q7-2")[0].focus()
+			// 	}
+			// 	else if(document.getElementsByName("q7-2")[1].value=="") {
+			// 		alert("7번")
+			// 		document.getElementsByName("q7-2")[1].focus()
+
+			// 	}
+			// }
+			else if(document.getElementsByName("q8")[0].value=="") {
+				alert("Please enter question 8")
+				document.getElementsByName("q8")[0].focus()
+			}
+			else if(document.getElementsByName("q8")[1].value=="") {
+				alert("Please enter question 8")
+				document.getElementsByName("q8")[1].focus()
+			}
+			else if (document.getElementsByName("q9")[0].value=="") {
+				alert("Please enter question 9")
+				document.getElementsByName("q9")[0].focus()
+			}
+			else {
+				document.getElementById("submit_button").innerHTML = "Submitted";
+				date = Date()
+				var formData1 = $('#form1').serializeArray()
+				var formData2 = $('#form2').serializeArray()
+			
+				var postdata = {
+					ID, 'date': date, 'formData1': formData1, 'formData2': formData2
+				}
+				console.log(postdata)
+				$.ajax({
+					type: 'POST',
+					url: '{{url_for("weekly_en")}}',
+					data: JSON.stringify(postdata),
+					dataType: 'JSON',
+					contentType: "application/json",
+					success: function (response) {
+						$('body').html(response);
+					},
+					error: function (request, status, error) {
+						alert('ajax 통신 실패')
+						alert(error);
+					}
+				})
+
+			}
+			
+		}
+	</script>
+</body>
+
+</html>

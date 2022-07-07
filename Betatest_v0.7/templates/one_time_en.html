@@ -1,0 +1,462 @@
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <script>
+        alert("{{messages[-1]}}")
+    </script>
+    {% endif %}
+{% endwith %}
+
+<!DOCTYPE html>
+<html lang="kr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" >
+    <script src="https://code.jquery.com/jquery-latest.min.js"></script>
+    <link rel="stylesheet" href="../static/style.css" type="text/css">
+    <script src="http://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+        crossorigin="anonymous"></script>
+    <title> 
+        [KNIH] AT SCH Univ.
+    </title>
+</head>
+<script type="text/javascript">
+    function showPopup() { window.open("pop_en.html", "a", "width=400, height=300, left=100, top=50"); }
+    function moveCursora(tel) {
+        if (tel.value.length == 3) {
+            document.getElementById("phonenum1").focus();
+        }
+    }
+    function moveCursorb(telbox) {
+        if (telbox.value.length == 4) {
+            document.getElementById("phonenum2").focus();
+        }
+    }
+
+    $(document).ready(function () {
+        $('.activation').on('click', function () {
+            var valueCheck = $('.activation:checked').val();
+            if (valueCheck == '1') {
+                $('.active').attr('disabled', false); 
+                $('.active').focus(); 
+            } else {
+                $('.active').attr('disabled', true); 
+                $("input:radio[name='q9']").prop('checked', false)
+            }
+        });
+        $('#submit_button').on('click', function() {
+            var q2 = document.getElementsByName("q2");
+            if(!q2[0].checked) {
+                q2[0].focus()
+                return false
+            }
+        })
+    });
+    function limitNumber(el, maxlength) {
+        if (el.value.length > maxlength) {
+            el.value = el.value.substr(0, maxlength);
+        }
+    }
+</script>
+<!-- //////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+<body>
+    <h1>One-Time Survey</h1>
+    <p>!!Don't press the back button!!</p>
+    <h2>Lifestyle</h2>
+
+    <form id="form1">
+        <div class="form-control">
+			<label for="q1" id="label-q1">
+                1. Please Input phone number
+            </label>
+            <input type="tel" id="phonenum" maxlength="3" onkeyup="moveCursora(this)" placeholder="010" name="q1-1" required/> -
+            <input type="tel" id="phonenum1" maxlength="4" onkeyup="moveCursorb(this)" placeholder="1234" name="q1-2" required/> -
+            <input type="tel" id="phonenum2" maxlength="4" placeholder="5678" name="q1-3" required/>
+        </div>
+        <br>
+
+        <div class="form-control">
+			<label for="q2" id="label-q2">
+                2. Please select type of smart phone
+            </label>
+            <label for="q2-1">
+                <input type="radio" id="q2-1" name="q2" value="1" checked>Galaxy</input>
+            </label>
+            <label for="q2-2">
+                <input type="radio" id="q2-2" name="q2" value="2">Iphone</label>
+            </label>
+        </div>
+        <br>
+
+        <div class="form-control">
+            <label for="q3" id="label-q3">
+                3. Please select type of smart band
+            </label>
+            <label for="q3-1">
+                <input type="radio" id="q3-1" name="q3" value="1" checked>Galaxy watch</input>
+            </label>
+            <label for="q3-2">
+                <input type="radio" id="q3-2" name="q3" value="2">Fitbit</label>
+            </label>
+        </div>
+        <br>
+
+        <div class="form-control">
+			<label for="q4" id="label-q4">
+            4. Please input birth of year
+            </label>
+            <input type="tel" id="age" maxlength="4" placeholder="1999" name="q4" oninput="limitNumber(this, 4)" required/>
+        </div>
+        <br>
+
+        <div class="form-control">
+            <label for="q5" id="label-q5">
+                5. Please select your gender
+            </label>
+            <label for="q5-1">
+                <input type="radio" id="q5-1" name="q5" value="1" checked>Male</input>
+            </label>
+            <label for="q5-2">
+                <input type="radio" id="q5-2" name="q5" value="2">Female</label>
+            </label>
+        </div>
+        <br>
+
+        <div class="form-control">
+			<label for="q6" id="label-q6">
+                6. Please select height
+            </label>
+			<label for="q6-1">
+                <input  type="radio" id="q6-1" name="q6" value="1" checked/>
+                150 or less</input>
+            </label>
+			<label for="q6-2">
+                <input  type="radio" id="q6-2" name="q6" value="2"/>
+                more than 150 and less than 160</input>
+            </label>
+            <label for="q6-3">
+                <input  type="radio" id="q6-3" name="q6" value="3"/>
+                more than 160 and less than 170</input>
+            </label>
+            <label for="q6-4">
+                <input  type="radio" id="q6-4" name="q6" value="4"/>
+                more than 170 and less than 180</input>
+            </label>
+            <label for="q6-5">
+                <input  type="radio" id="q6-5" name="q6" value="5"/>
+                over 180</input>
+            </label>
+        </div>
+        <br>
+
+        <div class="form-control">
+			<label for="q7" id="label-q7">
+                7. Please select weigth
+            </label>
+			<label for="q7-1">
+                <input  type="radio" id="q7-1" name="q7" value="1" checked/>
+                50 or less</input>
+            </label>
+			<label for="q7-2">
+                <input  type="radio" id="q7-2" name="q7" value="2"/>
+                more than 50 and less than 60</input>
+            </label>
+            <label for="q7-3">
+                <input  type="radio" id="q7-3" name="q7" value="3"/>
+                more than 60 and less than 70</input>
+            </label>
+			<label for="q7-4">
+                <input  type="radio" id="q7-4" name="q7" value="4"/>
+                more than 70 and less than 80</input>
+            </label>
+			<label for="q7-5">
+                <input  type="radio" id="q7-5" name="q7" value="5"/>
+                over 80</input>
+            </label>
+        </div>
+        <br>
+
+        <div class="form-control">
+            <label for="q8" id="label-q8">
+                8. Have you ever heard of snoring loudly?
+            </label>
+            <label for="q8-1">
+                <input type="radio" class="activation" name="q8" id="q8-1" value="1" checked>Yes(move to Q9)</input>
+            </label>
+            <label for="q8-2">
+                <input type="radio" class="activation" name="q8" id="q8-2" value="2">No(move to Q10)</input>
+            </label>    
+        </div>
+        <br>
+        <!-- 만약 코골이를 한다면 -->
+        <div class="form-control">
+			<label for="q9" id="label-q9">
+                9. If you answered "yes" to Q8, how often do you snore?
+            </label>
+			<label for="q9-1">
+                <input type="radio" class="active" name="q9" id="q9-1" value="1"/>
+                Almost none</input>
+            </label>
+			<label for="q9-2">
+                <input type="radio" class="active" name="q9" id="q9-2" value="2"/>
+                1 - 3 times (monthly)</input>
+            </label>
+			<label for="q9-3">
+                <input type="radio" class="active" name="q9" id="q9-3" value="3"/>
+                1 - 3 times (weekly)</input>
+            </label>
+			<label for="q9-4">
+                <input type="radio" class="active" name="q9" id="q9-4" value="4"/>
+                4 - 5 times (weekly)</input>
+            </label>
+			<label for="q9-5">
+                <input type="radio" class="active" name="q9" id="q9-5" value="5"/>
+                Almost every day (6 or more times a week)</input>
+            </label>
+        </div>
+        <br>
+        <!-- 활동 상태 확인 (팝업창) -->
+        <div class="form-control">
+			<label for="q10" id="label-q10">
+                10. What is your usual activity status?
+            </label>
+            <input type="button" value="View Details" onclick="showPopup();" />
+			<label for="q10-1">
+                <input type="radio" name="q10" id="q10-1" value="1" checked/>
+                Inactive</input>
+            </label>
+			<label for="q10-2">
+                <input type="radio" name="q10" id="q10-2" value="2" />
+                Low-active</input>
+            </label>
+			<label for="q10-3">
+                <input type="radio" name="q10" id="q10-3" value="3"/>
+                Active</input>
+            </label>
+			<label for="q10-4">
+                <input type="radio" name="q10" id="q10-4" value="4"/>
+                Very-active</input>
+            </label>
+        </div>
+    </form>
+
+    <!-- ///////////////////////////////////////////////////////////////////////////////////////////////////////////// -->
+    <!-- 정신 건강 설문 조사 -->
+    <h2>Mental Health</h2>
+
+	<form id="form2">
+		<div class="form-control">
+			<label for="mq1" id="label-mq1">
+                1. How do you feel about your health?
+            </label>
+			<label for="mq1-1">
+                <input type="radio" name="mq1" id="mq1-1" name="mq1" value="5" checked/>
+                very healthy</input>
+            </label>
+			<label for="mq1-2">
+                <input type="radio" name="mq1" id="mq1-2" name="mq1" value="4"/>
+                healthy</input>
+            </label>
+			<label for="mq1-3">
+                <input type="radio" name="mq1" id="mq1-3" name="mq1" value="3"/>
+                normal</input>
+            </label>
+			<label for="mq1-4">
+                <input type="radio" name="mq1" id="mq1-4" name="mq1" value="2"/>
+                unhealthy</input>
+            </label>
+            <label for="mq1-5">
+                <input type="radio" name="mq1" id="mq1-5" name="mq1" value="1"/>
+                very unhealthy</input>
+            </label>
+        </div>
+        <br>
+        <div class="form-control">
+			<label for="mq2" id="label-mq2">
+                2. What do you think of your economic situation?
+            </label>
+			<label for="mq2-1">
+                <input type="radio" name="mq2" id="mq2-1" value="4" checked/>
+                Good
+            </label>
+			<label for="mq2-2">
+                <input type="radio" name="mq2" id="mq2-2" value="3"/>
+                Not bad
+            </label>
+			<label for="mq2-3">
+                <input type="radio" name="mq2" id="mq2-3" value="2"/>
+                Little difficult
+            </label>
+			<label for="mq2-4">
+                <input type="radio" name="mq2" id="mq2-4" value="1"/>
+                Very difficult
+            </label>
+        </div>
+        <br>
+
+        <div class="form-control">
+			<label for="mq3" id="label-mq3">
+                3. I have recently become fidgety or mean-spirited
+            </label>
+			<label for="mq3-1">
+                <input type="radio"name="mq3" id="mq3-1" value="1" checked/>
+                don't feel that way at all
+            </label>
+			<label for="mq3-2">
+                <input type="radio" name="mq3" id="mq3-2" value="2"/>
+                feel a bit that way
+            </label>
+			<label for="mq3-3">
+                <input type="radio" name="mq3" id="mq3-3" value="3"/>
+                most feel that way
+            </label>
+			<label for="mq3-4">
+                <input type="radio" name="mq3" id="mq3-4" value="4"/>
+                always feel that way
+            </label>
+        </div>
+        <br>
+        <div class="form-control">
+			<label for="mq4" id="label-mq4">
+                4. I have been feeling unhappy and depressed lately
+            </label>
+			<label for="mq4-1">
+                <input type="radio" name="mq4" id="mq4-1" value="1" checked/>
+                don't feel that way at all
+            </label>
+			<label for="mq4-2">
+                <input type="radio" name="mq4" id="mq4-2" value="2"/>
+                feel a bit that way
+            </label>
+			<label for="mq4-3">
+                <input type="radio" name="mq4" id="mq4-3" value="3"/>
+                most feel that way
+            </label>
+			<label for="mq4-4">
+                <input type="radio" name="mq4" id="mq4-4" value="4"/>
+                always feel that way
+            </label>
+        </div>
+        <br>
+
+        <div class="form-control">
+			<label for="mq5" id="label-mq5">
+                5. I have been losing confidence in myself lately
+            </label>
+			<label for="mq5-1">
+                <input type="radio" name="mq5" id="mq5-1" value="1" checked/>
+                don't feel that way at all
+            </label>
+			<label for="mq5-2">
+                <input type="radio" name="mq5" id="mq5-2" value="2"/>
+                feel a bit that way
+            </label>
+			<label for="mq5-3">
+                <input type="radio" name="mq5" id="mq5-3" value="3"/>
+                most feel that way
+            </label>
+			<label for="mq5-4">
+                <input type="radio" name="mq5" id="mq5-4" value="4"/>
+                always feel that way
+            </label>
+        </div>
+        <br>
+        <div class="form-control">
+            <label for="mq6" id="label-mq6">
+                6. I feel happy when I consider everything lately
+            </label>
+            <label for="mq6-1">
+                <input type="radio" name="mq6" id="mq6-1" value="1" checked/>
+                don't feel that way at all
+            </label>
+            <label for="mq6-2">
+                <input type="radio" name="mq6" id="mq6-2" value="2"/>
+                feel a bit that way
+            </label>
+            <label for="mq6-3">
+                <input type="radio" name="mq6" id="mq6-3" value="3"/>
+                most feel that way
+            </label>
+            <label for="mq6-4">
+                <input type="radio" name="mq6" id="mq6-4" value="4"/>
+                always feel that way
+            </label>
+        </div>
+        <br>
+
+        <div class="form-control">
+			<label for="mq7" id="label-mq7">
+                7. I have been feeling lonely lately
+            </label>
+			<label for="mq7-1">
+                <input type="radio" name="mq7" id="mq7-1" value="1" checked/>
+                don't feel that way at all
+            </label>
+			<label for="mq7-2">
+                <input type="radio" name="mq7" id="mq7-2" value="2"/>
+                feel a bit that way
+            </label>
+			<label for="mq7-3">
+                <input type="radio" name="mq7" id="mq7-3" value="3"/>
+                most feel that way
+            </label>
+			<label for="mq7-4">
+                <input type="radio" name="mq7" id="mq7-4" value="4"/>
+                always feel that way
+            </label>
+        </div>
+    </form>
+        
+    <button onclick="final()" id="submit_button" class="btn btn-primary" style="width: 100%;" data-target="#result">Submit</button>
+	
+    <script>
+        let ID= '{{data}}'
+        function final() {
+            if(document.getElementsByName("q1-1")[0].value=="") {
+				alert("Please enter question 1")
+				document.getElementsByName("q1-1")[0].focus()
+			}
+            else if(document.getElementsByName("q1-2")[0].value=="") {
+				alert("Please enter question 1")
+				document.getElementsByName("q1-2")[0].focus()
+			}
+            else if(document.getElementsByName("q1-3")[0].value=="") {
+				alert("Please enter question 1")
+				document.getElementsByName("q1-3")[0].focus()
+			}
+            else if(document.getElementsByName("q4")[0].value=="") {
+				alert("Please enter question 4")
+				document.getElementsByName("q4")[0].focus()
+			}
+            else {
+                document.getElementById("submit_button").innerHTML = "Submitted";
+                var formData1 = $('#form1').serializeArray()
+                var formData2 = $('#form2').serializeArray()
+                var postdata = {
+                    ID, '1_formData1':formData1, '1_formData2':formData2
+                }
+                console.log(postdata)
+                $.ajax({
+                    type: 'POST',
+                    url: '{{url_for("ajax")}}',
+                    data: JSON.stringify(postdata),
+                    dataType : 'JSON',
+                    contentType: "application/json",
+                    success: function(data){
+                        // location.href="http://114.71.220.59:2017/final_en"
+                        location.href = "http://192.168.0.6:2019/final_en"
+                    },
+                    error: function(request, status, error){
+                        alert('ajax 통신 실패')
+                        alert(error);
+                    }
+                })
+
+            }
+
+            
+        }
+    </script>
+</body>
+</html>

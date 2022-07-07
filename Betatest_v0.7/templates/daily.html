@@ -1,0 +1,209 @@
+<!DOCTYPE HTML>
+
+<html lang="kr">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="../static/style.css" type="text/css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" >
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<title>
+		Daily Survey
+	</title>
+
+</head>
+
+<script type="text/javascript">
+	$(document).ready(function () {
+		$("#submit").click(function () {
+			if ($(':radio[name="mood"]:checked').length < 1) {
+				alert("답변을 입력해주세요");
+				$('#mood1').focus();
+				event.preventDefault();
+			}
+			else {
+				var fileCheck = document.getElementById("f").value;
+				var fileCheck2 = document.getElementById("f2").value;
+				var fileCheck3 = document.getElementById("f3").value;
+
+				if (!fileCheck) {
+					if (!confirm("파일1이 제출 되지 않았습니다. 정말 제출하시겠습니까?")) {
+						alert("다시 확인해주세요")
+					}
+					else {
+						var sid = '{{sid}}'
+						var data = {
+							"mood": $('input[name="mood"]:checked').val(),
+							"sid": sid
+						}
+						var formData = new FormData();
+						document.getElementById("submit").innerHTML = "제출중.... 완료될 때까지 기다려주세요";
+						formData.append('data', new Blob([JSON.stringify(data)], { type: "application/json" }));
+						formData.append('filed', document.getElementById("f").files[0]);
+						formData.append('filed2', document.getElementById("f2").files[0]);
+						formData.append('filed3', document.getElementById("f3").files[0]);
+						$.ajax({
+							type: 'POST',
+							url: '{{url_for("moody")}}',
+							data: formData,
+                            multiple: true,
+							contentType: false,
+							processData: false,
+							enctype: 'multipart/form-data',
+							success: function (data) {
+                            // location.href="http://114.71.220.59:2017/final"
+								location.href = "http://192.168.0.17:2019/final"
+							}
+						})
+					}
+				}
+
+				if (!fileCheck2) {
+					if (!confirm("파일2이 제출 되지 않았습니다. 정말 제출하시겠습니까?")) {
+						alert("다시 확인해주세요")
+					}
+					else {
+						var sid = '{{sid}}'
+						var data = {
+							"mood": $('input[name="mood"]:checked').val(),
+							"sid": sid
+						}
+						var formData = new FormData();
+						document.getElementById("submit").innerHTML = "제출중.... 완료될 때까지 기다려주세요";
+						formData.append('data', new Blob([JSON.stringify(data)], { type: "application/json" }));
+						formData.append('filed', document.getElementById("f").files[0]);
+						formData.append('filed2', document.getElementById("f2").files[0]);
+						formData.append('filed3', document.getElementById("f3").files[0]);
+						$.ajax({
+							type: 'POST',
+							url: '{{url_for("moody")}}',
+							data: formData,
+                            multiple: true,
+							contentType: false,
+							processData: false,
+							enctype: 'multipart/form-data',
+							success: function (data) {
+                            // location.href="http://114.71.220.59:2017/final"
+							location.href = "http://192.168.0.17:2019/final"
+							}
+						})
+					}
+				}
+
+				if (!fileCheck3) {
+					if (!confirm("파일3이 제출 되지 않았습니다. 정말 제출하시겠습니까?")) {
+						alert("다시 확인해주세요")
+					}
+					else {
+						var sid = '{{sid}}'
+						var data = {
+							"mood": $('input[name="mood"]:checked').val(),
+							"sid": sid
+						}
+						var formData = new FormData();
+						document.getElementById("submit").innerHTML = "제출중.... 완료될 때까지 기다려주세요";
+						formData.append('data', new Blob([JSON.stringify(data)], { type: "application/json" }));
+						formData.append('filed', document.getElementById("f").files[0]);
+						formData.append('filed2', document.getElementById("f2").files[0]);
+						formData.append('filed3', document.getElementById("f3").files[0]);
+						$.ajax({
+							type: 'POST',
+							url: '{{url_for("moody")}}',
+							data: formData,
+                            multiple: true,
+							contentType: false,
+							processData: false,
+							enctype: 'multipart/form-data',
+							success: function (data) {
+                            // location.href="http://114.71.220.59:2017/final"
+								location.href = "http://192.168.0.17:2019/final"
+							}
+						})
+					}
+				}
+
+				else {
+					var sid = '{{sid}}'
+					var data = {
+						"mood": $('input[name="mood"]:checked').val(),
+						"sid": sid
+					}
+					var formData = new FormData();
+					document.getElementById("submit").innerHTML = "제출중.... 완료될 때까지 기다려주세요";
+					formData.append('data', new Blob([JSON.stringify(data)], { type: "application/json" }));
+					formData.append('filed', document.getElementById("f").files[0]);
+					formData.append('filed2', document.getElementById("f2").files[0]);
+					formData.append('filed3', document.getElementById("f3").files[0]);
+					$.ajax({
+						type: 'POST',
+						url: '{{url_for("moody")}}',
+						data: formData,
+                        multiple: true,
+						contentType: false,
+						processData: false,
+						enctype: 'multipart/form-data',
+						success: function (data) {
+                            // location.href="http://114.71.220.59:2017/final"
+							location.href = "http://192.168.0.17:2019/final"
+						}
+					})
+				}
+			}
+		});
+	});
+</script>
+
+<body>
+
+	<h1 id="title_mood">오늘 하루 어떠셨나요?</h1>
+	<p>설문횟수: {{cnt}}, 제출횟수: {{fcnt}}</p>
+	<!-- Daily Survey Form -->
+	<form id="form" action="/moody" method="POST" name="fm">
+		<div class="form-control">
+			<!-- Input Type Radio Button -->
+			<label for="recommed-1">
+				<img src="../static/great.png" width="100" height="110">
+				<input type="radio" id="mood" style="width: 30px; height: 30px;" value="5" name="mood">
+				아주 좋아요</input>
+			</label>
+			<hr>
+			<label for="recommed-2">
+				<img src="../static/good.png" width="100" height="100">
+				<input type="radio" id="mood" style="width: 30px; height: 30px;" value="4" name="mood">
+				좋아요</input>
+			</label>
+			<hr>
+			<label for="recommed-3">
+				<img src="../static/soso.png" width="100" height="90">
+				<input type="radio" id="mood" style="width: 30px; height: 30px;" value="3" name="mood">
+				괜찮아요</input>
+			</label>
+			<hr>
+			<label for="recommed-4">
+				<img src="../static/poor.png" width="100" height="100">
+				<input type="radio" id="mood" style="width: 30px; height: 30px;" value="2" name="mood">
+				좀 별로에요</input>
+			</label>
+			<hr>
+			<label for="recommed-5">
+				<img src="../static/bad.png" width="100" height="100">
+				<input type="radio" id="mood" style="width: 30px; height: 30px;" value="1" name="mood">
+				나빠요</input>
+			</label>
+			<hr>
+		</div>
+		<a style="font-size: 20px;">1. Gyroscope data</a><input type="file" id="f" name="filed" multiple="multiple">
+		<hr>
+		<a style="font-size: 20px;">2. Acceleration data</a><input type="file" id="f2" name="filed2" multiple="multiple">
+		<hr>
+		<a style="font-size: 20px;">3. Data</a><input type="file" id="f3" name="filed3" multiple="multiple">
+	</form>
+	<button type="submit" value="submit" id="submit">
+		제출하기
+	</button>
+</body>
+
+</html>
+<!DOCTYPE html>

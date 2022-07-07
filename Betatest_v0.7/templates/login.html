@@ -1,0 +1,65 @@
+{% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <script>
+        alert("{{messages[-1]}}")
+    </script>
+    {% endif %}
+{% endwith %}
+
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KNIH</title>
+    <script src="http://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+        crossorigin="anonymous"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="../static/style.css" type="text/css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+        </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+</head>
+<script type="text/javascript">
+    function moveCursor(textbox) {
+        if (textbox.value.length == 3) {
+            document.getElementById("Pwd").focus();
+        }
+    }
+    $(document).ready(function () {
+        $("#submit").click(function () {
+            if ($("#Id").val().length == 1) { alert("아이디를 입력하세요"); $("#Id").focus(); return false; }
+            if ($("#Pwd").val().length == 0) { alert("비밀번호를 입력하세요"); $("#Pwd").focus(); return false; }
+        });
+    });
+</script>
+
+<body>
+    <h1><b>KNIH</b></h1>
+    <h3>설문조사 로그인</h3>
+    <img id="image" src="../static/english.png" style="width:50px" onClick="location.href='/en'">
+    <form action="/user/login" method="POST">
+        <div>
+            <label for="enter-login" style="text-align:center;">
+                S아이디<br>
+                <b>S</b><input style="text-align: center;", placeholder="3자리 숫자" type="tel" id="Id" name="id" , maxlength="3" onkeyup="moveCursor(this)"  oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+            </label>
+        </div>
+        <div>
+        <label for="enter-pwd">
+            비밀번호
+            <input style="text-align: center;" type="password" id="Pwd" name="pwd" , placeholder="Password">
+        </label>
+    </div>
+    <div>
+        <input type="submit" style="width: 50%;" value="로그인" id="submit">
+    </div>
+    </form>
+</body>
+
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>KNIH</title>
+    <script src="http://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+        crossorigin="anonymous"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="../static/style.css" type="text/css">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+        </script>
+</head>
+<script type="text/javascript">
+    function moveCursor(textbox) {
+        if (textbox.value.length == 3) {
+            document.getElementById("pw1").focus();
+        }
+    }
+    function jbSubmit() {
+        var pw1 = document.getElementById("pw1").value;
+        var pw2 = document.getElementById("pw2").value;
+        if (pw1 != pw2) {
+            alert("The password is wrong. Please check again");
+            return false;
+        }
+    }
+    $(document).ready(function () {
+        $("#submit").click(function () {
+            if ($("#id").val().length == 1) { alert("Please input id"); $("#id").focus(); return false; }
+            if ($("#pw1").val().length == 0) { alert("Please input password"); $("#pw1").focus(); return false; }
+            if ($("#pw2").val().length == 0) { alert("Please check your password again"); $("#pw2").focus(); return false; }
+        });
+    });
+</script>
+
+<body>
+    <h1><b>KNIH</b></h1>
+    <h2 style="font-size: 40px;">Sign-up Survey</h2>
+    <img id="image" src="../static/english.png" style="width:50px" onClick="location.href='/register'">
+    <form id="s1" name="form" action="/register_en" method="POST" onsubmit="return jbSubmit();">
+        <div>
+            <label for="id" style="text-align:center;">
+                SID<br>
+                S<input style="text-align: center;", placeholder="3 digit number" type="tel", name="id" , maxlength="3" id="id" onkeyup="moveCursor(this)" oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');">
+            </label>
+        </div>
+        <hr>
+        <div>
+            <label for="pw1" style="text-align:center;">
+                Password
+                <input style="text-align: center;" type="password" id="pw1" name="pwd" , placeholder="Password">
+            </label>
+        </div>
+        <hr>
+        <div>
+            <label for="pw2"  style="text-align:center;">
+                Check Password
+                <input  style="text-align: center;" type="password" id="pw2" name="pwd2" , placeholder="Check Password">
+            </label>
+        </div>
+        <hr>
+        <div>
+            <input type="submit" style="width: 50%;" value="Register" id="submit">
+        </div>
+    </form>
+
+    {%with messages = get_flashed_messages()%}
+    {%if messages %}
+    <script type="text/javascript">
+        alert("{{messages[-1]}}")
+    </script>
+    {%endif%}
+    {%endwith%}
+
+</body>
+
+</html>

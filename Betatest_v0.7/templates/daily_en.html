@@ -1,0 +1,169 @@
+<!DOCTYPE HTML>
+
+<html lang="kr">
+
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="../static/style.css" type="text/css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" >
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<title>
+		Daily Survey
+	</title>
+
+</head>
+
+<script type="text/javascript">
+	$(document).ready(function () {
+		$("#submit").click(function () {
+			if ($(':radio[name="mood"]:checked').length < 1) {
+				alert("Please enter your answer");
+				$('#mood1').focus();
+				event.preventDefault();
+			}
+			else {
+				var fileCheck = document.getElementById("f").value;
+				var fileCheck2 = document.getElementById("f2").value;
+				if (!fileCheck) {
+					if (!confirm("File1 was not submitted. Are you sure you want to submit?")) {
+						alert("Please check again")
+					}
+					else {
+						var sid = '{{sid}}'
+						var data = {
+							"mood": $('input[name="mood"]:checked').val(),
+							"sid": sid
+						}
+						var formData = new FormData();
+						document.getElementById("submit").innerHTML = "Submitting...Please wait for it to complete";
+						formData.append('data', new Blob([JSON.stringify(data)], { type: "application/json" }));
+						formData.append('filed', document.getElementById("f").files[0]);
+						formData.append('filed2', document.getElementById("f2").files[0]);
+						$.ajax({
+							type: 'POST',
+							url: '{{url_for("moody_en")}}',
+							data: formData,
+                            multiple: true,
+							contentType: false,
+							processData: false,
+							enctype: 'multipart/form-data',
+							success: function (data) {
+                            // location.href="http://114.71.220.59:2017/final"
+								location.href = "http://192.168.0.6:2019/final_en"
+							}
+						})
+					}
+				}
+
+				if (!fileCheck2) {
+					if (!confirm("File2 was not submitted. Are you sure you want to submit?")) {
+						alert("Please check again")
+					}
+					else {
+						var sid = '{{sid}}'
+						var data = {
+							"mood": $('input[name="mood"]:checked').val(),
+							"sid": sid
+						}
+						var formData = new FormData();
+						document.getElementById("submit").innerHTML = "Submitting...Please wait for it to complete";
+						formData.append('data', new Blob([JSON.stringify(data)], { type: "application/json" }));
+						formData.append('filed', document.getElementById("f").files[0]);
+						formData.append('filed2', document.getElementById("f2").files[0]);
+						$.ajax({
+							type: 'POST',
+							url: '{{url_for("moody_en")}}',
+							data: formData,
+                            multiple: true,
+							contentType: false,
+							processData: false,
+							enctype: 'multipart/form-data',
+							success: function (data) {
+                            // location.href="http://114.71.220.59:2017/final"
+							location.href = "http://192.168.0.6:2019/final_en"
+							}
+						})
+					}
+				}
+				else {
+					var sid = '{{sid}}'
+					var data = {
+						"mood": $('input[name="mood"]:checked').val(),
+						"sid": sid
+					}
+					var formData = new FormData();
+					document.getElementById("submit").innerHTML = "Submitting...Please wait for it to complete";
+					formData.append('data', new Blob([JSON.stringify(data)], { type: "application/json" }));
+					formData.append('filed', document.getElementById("f").files[0]);
+					formData.append('filed2', document.getElementById("f2").files[0]);
+					$.ajax({
+						type: 'POST',
+						url: '{{url_for("moody_en")}}',
+						data: formData,
+                        multiple: true,
+						contentType: false,
+						processData: false,
+						enctype: 'multipart/form-data',
+						success: function (data) {
+                            // location.href="http://114.71.220.59:2017/final_en"
+							location.href = "http://192.168.0.6:2019/final_en"
+						}
+					})
+				}
+			}
+		});
+	});
+</script>
+
+<body>
+
+	<h1 id="title_mood">How was your day?</h1>
+	<p>number of surveys: {{cnt}}, number of submissions: {{fcnt}}</p>
+	<!-- Daily Survey Form -->
+	<form id="form" action="/moody_en" method="POST" name="fm">
+		<div class="form-control">
+			<!-- Input Type Radio Button -->
+			<label for="recommed-1">
+				<img src="../static/great.png" width="100" height="110">
+				<input type="radio" id="mood" style="width: 30px; height: 30px;" value="5" name="mood">
+				Very good</input>
+			</label>
+			<hr>
+			<label for="recommed-2">
+				<img src="../static/good.png" width="100" height="100">
+				<input type="radio" id="mood" style="width: 30px; height: 30px;" value="4" name="mood">
+				Good</input>
+			</label>
+			<hr>
+			<label for="recommed-3">
+				<img src="../static/soso.png" width="100" height="90">
+				<input type="radio" id="mood" style="width: 30px; height: 30px;" value="3" name="mood">
+				Not bad</input>
+			</label>
+			<hr>
+			<label for="recommed-4">
+				<img src="../static/poor.png" width="100" height="100">
+				<input type="radio" id="mood" style="width: 30px; height: 30px;" value="2" name="mood">			
+				A little bad</input>
+			</label>
+			<hr>
+			<label for="recommed-5">
+				<img src="../static/bad.png" width="100" height="100">
+				<input type="radio" id="mood" style="width: 30px; height: 30px;" value="1" name="mood">
+				Bad</input>
+			</label>
+			<hr>
+		</div>
+		<a style="font-size: 20px;">1. Gyroscope data</a><input type="file" id="f" name="filed" multiple="multiple">
+		<hr>
+		<a style="font-size: 20px;">2. Acceleration data</a><input type="file" id="f2" name="filed2" multiple="multiple">
+	</form>
+	<button type="submit" value="submit" id="submit">
+		Submit
+	</button>
+</body>
+
+</html>
+<!DOCTYPE html>
