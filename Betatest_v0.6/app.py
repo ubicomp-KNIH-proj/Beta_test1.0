@@ -512,10 +512,13 @@ def getCountDict(today):
         members.update_one({'id':k}, {'$set':{'CIN_count':v}})
         if member_id != None :
             cin_count = member_id["CIN_count"]
+            print(cin_count)
             if cin_count < 96:
+                print(k,'96보다 작습니다.')
                 members.update_one({'id': k}, {'$push': {'cal_list':0}})
             else:
                 if cin_count >= 96:
+                    print(k, '96보다 큽니다.')
                     members.update_one({'id': k}, {'$push': {'cal_list':1}})
     return dict_CIN
     
@@ -527,7 +530,7 @@ if __name__ == '__main__':
 
     sched.add_job(count, 'cron', hour="00", minute="00", id="test_1") #토요일마다
     # sched.add_job(getCountDict, 'cron', hour="00", minute="01", id="test_2", args=[today])
-    sched.add_job(getCountDict, 'cron', hour="17", minute="40", id="test_2", args=[today])
+    sched.add_job(getCountDict, 'cron', hour="18", minute="07", id="test_2", args=[today])
     sched.start()
 
     #from waitress import serve
