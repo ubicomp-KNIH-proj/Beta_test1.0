@@ -516,10 +516,12 @@ def getCountDict(today):
             if cin_count < 96:
                 print(k,'96보다 작습니다.')
                 members.update_one({'id': k}, {'$push': {'cal_list':0}})
+                continue
             else:
                 if cin_count >= 96:
                     print(k, '96보다 큽니다.')
                     members.update_one({'id': k}, {'$push': {'cal_list':1}})
+                    continue
     return dict_CIN
     
 if __name__ == '__main__':
