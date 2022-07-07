@@ -14,10 +14,13 @@ from apscheduler.schedulers.blocking import BlockingScheduler
 from apscheduler.schedulers.background import BackgroundScheduler
 import requests
 import json
+from datetime import timedelta
+from flask import session, app
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = "2019"
 app.config["MONGO_URI"] = "mongodb://localhost:27017/survey"
+app.config['PERMANENT_SESSION_LIFETIME'] = timedelta(minutes=5)
 mongo = PyMongo(app)
 
 client = MongoClient('localhost', 27017)
@@ -53,7 +56,8 @@ def register():
             "submit_count": 0,
             "weekly_count": 0,
             "daily": 0,
-            "CIN_count": 0
+            "CIN_count": 0,
+            "cal_list": []
         }
         # print(mongo.db.list_collection_names())
         if id in mongo.db.list_collection_names() :
@@ -137,7 +141,10 @@ def login():
         return render_template('login.html')
     else:
         member_id = members.find_one({'id': id})
+        # print(session['id'])
         if member_id['pwd'] == pwd: 
+            session['id'] = request.form['id'] 
+            session.permanent = True
             daily_cal = member_id["daily"]
             cin_count = member_id["CIN_count"]
             if daily_cal == 1 : #갤럭시 사용자
@@ -389,6 +396,8 @@ def ajax3():
     count = member_id['submit_count']
     fcount = member_id['attach_count']
     wcount = member_id["weekly_count"]
+    cin_count = member_id["CIN_count"]
+        
     asia_seoul = datetime.datetime.fromtimestamp(time.time(), pytz.timezone('Asia/Seoul'))
     t = ['월요일', '화요일', '수요일', '목요일', '금요일', '토요일', '일요일']
     now = t[asia_seoul.today().weekday()]
@@ -440,6 +449,13 @@ def window_pop():
 def window_pop_en():
     return render_template("pop_en.html")
 
+#세션 유지
+@app.before_request
+def make_session_permanent():
+    session.permanent = True
+    #10분 후 세션 만료
+    app.permanent_session_lifetime = timedelta(minutes=1)
+
 #백그라운드 실행
 asia_seoul = datetime.datetime.fromtimestamp(time.time(), pytz.timezone('Asia/Seoul'))
 today = asia_seoul.strftime("%Y%m%d")
@@ -462,9 +478,9 @@ def countCIN(serverName, aeName, today):
     url2 = IoT_1 + "/Mobius/" + aeName + "/watch?fu=1&ty=4&rcn=4"  + cra + crb
     payload={}
     headers = {
-    'Accept': 'application/json',
-    'X-M2M-RI': '12345',
-    'X-M2M-Origin': 'ubicomp_super'
+        'Accept': 'application/json',
+        'X-M2M-RI': '12345',
+        'X-M2M-Origin': 'ubicomp_super'
     }
     try:
         response1 = requests.request("GET", url1, headers=headers, data=payload)
@@ -491,8 +507,16 @@ def getCountDict(today):
             
     for k,v in dict_CIN.items():
         k=str(k)
+        v=int(v)
         member_id = members.find_one({'id': k})
         members.update_one({'id':k}, {'$set':{'CIN_count':v}})
+        if member_id != None :
+            cin_count = member_id["CIN_count"]
+            if cin_count < 96:
+                members.update_one({'id': k}, {'$push': {'cal_list':0}})
+            else:
+                if cin_count >= 96:
+                    members.update_one({'id': k}, {'$push': {'cal_list':1}})
     return dict_CIN
     
 if __name__ == '__main__':
@@ -502,7 +526,8 @@ if __name__ == '__main__':
     today = asia_seoul.strftime("%Y%m%d")
 
     sched.add_job(count, 'cron', hour="00", minute="00", id="test_1") #토요일마다
-    sched.add_job(getCountDict, 'cron', hour="23", minute="59", id="test_2", args=[today])
+    # sched.add_job(getCountDict, 'cron', hour="00", minute="01", id="test_2", args=[today])
+    sched.add_job(getCountDict, 'cron', hour="17", minute="40", id="test_2", args=[today])
     sched.start()
 
     #from waitress import serve
