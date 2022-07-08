@@ -26,8 +26,10 @@
 			else {
 				var fileCheck = document.getElementById("f").value;
 				var fileCheck2 = document.getElementById("f2").value;
+				var fileCheck3 = document.getElementById("f3").value;
+
 				if (!fileCheck) {
-					if (!confirm("File1 was not submitted. Are you sure you want to submit?")) {
+					if (!confirm("File1-1 was not submitted. Are you sure you want to submit?")) {
 						alert("Please check again")
 					}
 					else {
@@ -41,24 +43,25 @@
 						formData.append('data', new Blob([JSON.stringify(data)], { type: "application/json" }));
 						formData.append('filed', document.getElementById("f").files[0]);
 						formData.append('filed2', document.getElementById("f2").files[0]);
+						formData.append('filed3', document.getElementById("f3").files[0]);
 						$.ajax({
 							type: 'POST',
-							url: '{{url_for("moody_en")}}',
+							url: '{{url_for("moody")}}',
 							data: formData,
                             multiple: true,
 							contentType: false,
 							processData: false,
 							enctype: 'multipart/form-data',
 							success: function (data) {
-                            // location.href="http://114.71.220.59:2017/final"
-								location.href = "http://192.168.0.6:2019/final_en"
+                            // location.href="http://114.71.220.59:2017/final_en"
+								location.href = "http://192.168.0.17:2019/final_en"
 							}
 						})
 					}
 				}
 
 				if (!fileCheck2) {
-					if (!confirm("File2 was not submitted. Are you sure you want to submit?")) {
+					if (!confirm("File1-2 was not submitted. Are you sure you want to submit?")) {
 						alert("Please check again")
 					}
 					else {
@@ -72,21 +75,55 @@
 						formData.append('data', new Blob([JSON.stringify(data)], { type: "application/json" }));
 						formData.append('filed', document.getElementById("f").files[0]);
 						formData.append('filed2', document.getElementById("f2").files[0]);
+						formData.append('filed3', document.getElementById("f3").files[0]);
 						$.ajax({
 							type: 'POST',
-							url: '{{url_for("moody_en")}}',
+							url: '{{url_for("moody")}}',
 							data: formData,
                             multiple: true,
 							contentType: false,
 							processData: false,
 							enctype: 'multipart/form-data',
 							success: function (data) {
-                            // location.href="http://114.71.220.59:2017/final"
-							location.href = "http://192.168.0.6:2019/final_en"
+                            // location.href="http://114.71.220.59:2017/final_en"
+							    location.href = "http://192.168.0.17:2019/final_en"
 							}
 						})
 					}
 				}
+
+				if (!fileCheck3) {
+					if (!confirm("File2-1 was not submitted. Are you sure you want to submit?")) {
+						alert("Please check again")
+					}
+					else {
+						var sid = '{{sid}}'
+						var data = {
+							"mood": $('input[name="mood"]:checked').val(),
+							"sid": sid
+						}
+						var formData = new FormData();
+						document.getElementById("submit").innerHTML = "Submitting...Please wait for it to complete";
+						formData.append('data', new Blob([JSON.stringify(data)], { type: "application/json" }));
+						formData.append('filed', document.getElementById("f").files[0]);
+						formData.append('filed2', document.getElementById("f2").files[0]);
+						formData.append('filed3', document.getElementById("f3").files[0]);
+						$.ajax({
+							type: 'POST',
+							url: '{{url_for("moody")}}',
+							data: formData,
+                            multiple: true,
+							contentType: false,
+							processData: false,
+							enctype: 'multipart/form-data',
+							success: function (data) {
+                            // location.href="http://114.71.220.59:2017/final_en"
+								location.href = "http://192.168.0.17:2019/final_en"
+							}
+						})
+					}
+				}
+
 				else {
 					var sid = '{{sid}}'
 					var data = {
@@ -98,9 +135,10 @@
 					formData.append('data', new Blob([JSON.stringify(data)], { type: "application/json" }));
 					formData.append('filed', document.getElementById("f").files[0]);
 					formData.append('filed2', document.getElementById("f2").files[0]);
+					formData.append('filed3', document.getElementById("f3").files[0]);
 					$.ajax({
 						type: 'POST',
-						url: '{{url_for("moody_en")}}',
+						url: '{{url_for("moody")}}',
 						data: formData,
                         multiple: true,
 						contentType: false,
@@ -108,7 +146,7 @@
 						enctype: 'multipart/form-data',
 						success: function (data) {
                             // location.href="http://114.71.220.59:2017/final_en"
-							location.href = "http://192.168.0.6:2019/final_en"
+							location.href = "http://192.168.0.17:2019/final_en"
 						}
 					})
 				}
@@ -117,8 +155,8 @@
 	});
 </script>
 
-<body>
 
+<body>
 	<h1 id="title_mood">How was your day?</h1>
 	<p>number of surveys: {{cnt}}, number of submissions: {{fcnt}}</p>
 	<!-- Daily Survey Form -->
@@ -156,9 +194,13 @@
 			</label>
 			<hr>
 		</div>
-		<a style="font-size: 20px;">1. Gyroscope data</a><input type="file" id="f" name="filed" multiple="multiple">
+		<div>1. Sensor Recorder</div>
+		<a style="font-size: 20px;">1-1. Gyroscope data</a><input type="file" id="f" name="filed" multiple="multiple">
+		<br>
+        <a style="font-size: 20px;">1-2. Acceleration data</a><input type="file" id="f2" name="filed2" multiple="multiple">
 		<hr>
-		<a style="font-size: 20px;">2. Acceleration data</a><input type="file" id="f2" name="filed2" multiple="multiple">
+        <div>2. Health</div>
+		<a style="font-size: 20px;">2-1. Health data</a><input type="file" id="f3" name="filed3" multiple="multiple">
 	</form>
 	<button type="submit" value="submit" id="submit">
 		Submit
