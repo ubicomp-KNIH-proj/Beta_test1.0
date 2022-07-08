@@ -1,0 +1,89 @@
+html {
+    font-size: 20px;
+}
+
+body {
+    background-color: #c8e0e7;
+    font-family: Verdana;
+    text-align: center;
+}
+
+form {
+    background-color: #fff;
+    max-width: 700px;
+    margin: 20px auto;
+    padding: 30px 20px;
+    box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.5);
+}
+
+.form-control {
+    text-align: left;
+    margin-bottom: 25px;
+}
+
+.form-control label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.form-control input,
+.form-control select,
+.form-control textarea {
+    border: 1px solid #777;
+    border-radius: 2px;
+    font-family: inherit;
+    padding: 10px;
+    display: block;
+    width: 95%;
+}
+
+.form-control input[type="radio"],
+.form-control input[type="checkbox"] {
+    display: inline-block;
+    width: auto;
+}
+
+button {
+    background-color: #ffffff;
+    border: 3px solid #97bbef;
+    color: #97bbef;
+    border-radius: 2px;
+    font-family: inherit;
+    font-size: 21px;
+    display: block;
+    width: 100%;
+    margin-top: 50px;
+    margin-bottom: 20px;
+}
+
+.table {
+    width: 500px;
+}
+
+#phonenum {
+    display: inline-block;
+    width: 20%;
+}
+
+#phonenum1 {
+    display: inline-block;
+    width: 20%;
+}
+
+#phonenum2 {
+    display: inline-block;
+    width: 20%;
+}
+
+#title_mood {
+    font-size: 40px;
+}
+
+#logindiv {
+    background-color: #fff;
+    width: 100%;
+    margin: auto auto;
+    padding: 30px 20px;
+    box-shadow: 2px 5px 10px rgba(0, 0, 0, 0.5);
+    
+}
