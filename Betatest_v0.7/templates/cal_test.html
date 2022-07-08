@@ -7,9 +7,6 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta http-equiv="Content-Type" content="text/html" charset="EUC-KR">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" >
-	<link rel="stylesheet" href="/static/style.css" type="text/css">
-	<script src="http://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
-		crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../static/style.css" type="text/css">
     <title>KNIH_Galaxy user</title>
     <style type="text/css">
@@ -78,27 +75,21 @@
                     cell.innerHTML = "<font color=black>" + i
                     row = calendar.insertRow();
                 }
-                // if (today.getFullYear() == date.getFullYear()
-                //     && today.getMonth() == date.getMonth()
-                //     && i == date.getDate()) {
-                //     cell.bgColor = "#00FFFF";
-                // }
                 sum = Number(reg_d) + Number(cal_l.length)
-                for(j=reg_d; j<sum; j++) {
-                    if (today.getFullYear() == date.getFullYear()
-                    && today.getMonth() == date.getMonth() && i==j) {
-                        for (k = 0; k < Number(cal.length); k++) {
-                            if(cal_l[k] == 0) {
-                                // 파
-                                cell.bgColor = "#FF00FF";
-                            } else {
-                                //빨
-                                cell.bgColor = "#0000FF";
-                            }
+                for(k=reg_d; k<sum; k++) {
+                    if(i==k) {
+                        if (cal_l[i-reg_d] == 0) {
+                            cell.bgColor = "#FF00FF";
+                        } else {
+                            cell.bgColor = "0000FF";
                         }
+                        
                     }
+                    
                 }
-            }
+               
+
+            }            
         }
     </script>
 </head>
@@ -151,8 +142,6 @@
         let reg_m = '{{reg_m}}'
         let reg_d = '{{reg_d}}'
         cal_l = JSON.parse(cal)
-        
-
         let ID = '{{sid}}'
         // date = Date()
         function toDaily() {
@@ -167,7 +156,7 @@
                 contentType: "application/json",
                 success: function (response) {
                     $('body').html(response); 
-                    // alert(response)
+                    // alert(response);
                 },
                 error: function (request, status, error) {
                     alert('ajax 통신 실패')
