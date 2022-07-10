@@ -17,6 +17,7 @@ import json
 from datetime import timedelta
 from flask import session, app
 
+######### Config #########
 app = Flask(__name__)
 app.config['SECRET_KEY'] = "2019"
 app.config["MONGO_URI"] = "mongodb://localhost:27017/survey"
@@ -26,6 +27,9 @@ mongo = PyMongo(app)
 client = MongoClient('localhost', 27017)
 members = mongo.db.members
 db = client['survey']
+# Ubi_Lab, Dept. of Internet of Things, ML, SCH Univ.
+######### Config #########
+
 
 #홈화면
 @app.route('/')
@@ -117,7 +121,7 @@ def register_en():
             members.insert_one(post)
             return render_template("one_time_en.html", data=id)
 
-#ajax
+# One-time survey 아이폰, 갤럭시 사용자 구분
 @app.route('/ajax', methods=['GET', 'POST'])
 def ajax():
     data = request.get_json()
@@ -167,20 +171,17 @@ def login():
                     asia_seoul = datetime.datetime.fromtimestamp(time.time(), pytz.timezone('Asia/Seoul'))
                     t = ['월요일', '화요일', '수요일', '목요일', '금요일', '토요일', '일요일']
                     now = t[asia_seoul.today().weekday()]
-                    if now == "토요일":
-                        members.update_one({'id': id}, {'$inc': {'weekly_count': -1}}) #토요일 로그인 -> count가 1씩 감소
+
+                    if member_id['weekly_count'] > 0:
                         return render_template('weekly.html', sid=id, cnt=count, fcnt=fcount, wcnt=wcount)
                     else:
-                        if member_id['weekly_count'] > 0:
-                            return render_template('weekly.html', sid=id, cnt=count, fcnt=fcount, wcnt=wcount)
+                        if member_id['daily'] == 1:
+                            return render_template('gal_daily.html', sid=id, cnt=count, fcnt=fcount, wcnt=wcount)
+                            # return render_template('weekly.html', sid=id, cnt=count, fcnt=fcount, wcnt=wcount)
                         else:
-                            if member_id['daily'] == 1:
-                                return render_template('gal_daily.html', sid=id, cnt=count, fcnt=fcount, wcnt=wcount)
+                            if member_id['daily'] == 2:
+                                return render_template('daily.html', sid=id, cnt=count, fcnt=fcount, wcnt=wcount)    
                                 # return render_template('weekly.html', sid=id, cnt=count, fcnt=fcount, wcnt=wcount)
-                            else:
-                                if member_id['daily'] == 2:
-                                    return render_template('daily.html', sid=id, cnt=count, fcnt=fcount, wcnt=wcount)    
-                                    # return render_template('weekly.html', sid=id, cnt=count, fcnt=fcount, wcnt=wcount)
 
         else: #비밀번호가 틀리면
             flash('비밀번호가 일치하지 않습니다.')
@@ -215,18 +216,15 @@ def login_en():
                     asia_seoul = datetime.datetime.fromtimestamp(time.time(), pytz.timezone('Asia/Seoul'))
                     t = ['월요일', '화요일', '수요일', '목요일', '금요일', '토요일', '일요일']
                     now = t[asia_seoul.today().weekday()]
-                    if now == "토요일":
-                        members.update_one({'id': id}, {'$inc': {'weekly_count': -1}}) #토요일 로그인 -> count가 1씩 감소
+
+                    if member_id['weekly_count'] > 0:
                         return render_template('weekly_en.html', sid=id, cnt=count, fcnt=fcount, wcnt=wcount)
                     else:
-                        if member_id['weekly_count'] > 0:
-                            return render_template('weekly_en.html', sid=id, cnt=count, fcnt=fcount, wcnt=wcount)
+                        if member_id['daily'] == 1:
+                            return render_template('gal_daily_en.html', sid=id, cnt=count, fcnt=fcount, wcnt=wcount)
                         else:
-                            if member_id['daily'] == 1:
-                                return render_template('gal_daily_en.html', sid=id, cnt=count, fcnt=fcount, wcnt=wcount)
-                            else:
-                                if member_id['daily'] == 2:
-                                    return render_template('daily_en.html', sid=id, cnt=count, fcnt=fcount, wcnt=wcount)                    
+                            if member_id['daily'] == 2:
+                                return render_template('daily_en.html', sid=id, cnt=count, fcnt=fcount, wcnt=wcount)                    
         else: #비밀번호가 틀리면
             flash('The password you entered does not match.')
             return render_template('login_en.html')
@@ -276,7 +274,7 @@ def moody():
         fs3.put(contents, filename=fname3)
 
     members.update_one({'id': s_id}, {'$inc': {'submit_count': 1}})
-    return render_template('weekly.html')
+    # return render_template('weekly.html')
 
 #Daily_아이폰 사용자_영어
 @app.route('/moody_en', methods=['POST'])
@@ -316,7 +314,7 @@ def moody_en():
         fs3.put(contents, filename=fname3)
 
     members.update_one({'id': s_id}, {'$inc': {'submit_count': 1}})
-    return render_template('weekly.html')
+    # return render_template('weekly.html')
 
 #Daily_갤럭시 사용자
 @app.route('/moody2', methods=['POST'])
@@ -392,6 +390,7 @@ def weekly():
     survey_result.insert_one(data)
     data.pop('_id')
     member_id = members.find_one({'id': x_survey})
+    members.update_one({'id': x_survey}, {'$inc': {'weekly_count': -1}}) # Weekly survey 완료시-> count가 1씩 감소
     count = member_id['submit_count']
     fcount = member_id['attach_count']
     if member_id['daily'] == 1:
@@ -410,6 +409,7 @@ def weekly_en():
     survey_result.insert_one(data)
     data.pop('_id')
     member_id = members.find_one({'id': x_survey})
+    members.update_one({'id': id}, {'$inc': {'weekly_count': -1}}) # Weekly survey 완료시-> count가 1씩 감소
     count = member_id['submit_count']
     fcount = member_id['attach_count']
     if member_id['daily'] == 1:
@@ -432,20 +432,17 @@ def ajax3():
     asia_seoul = datetime.datetime.fromtimestamp(time.time(), pytz.timezone('Asia/Seoul'))
     t = ['월요일', '화요일', '수요일', '목요일', '금요일', '토요일', '일요일']
     now = t[asia_seoul.today().weekday()]
-    if now == "토요일":
-        members.update_one({'id': x_survey}, {'$inc': {'weekly_count': -1}}) #토요일 로그인 -> count가 1씩 감소
+
+    if member_id['weekly_count'] > 0:
         return jsonify(render_template('weekly.html', sid=x_survey, cnt=count, fcnt=fcount, wcnt=wcount))
     else:
-        if member_id['weekly_count'] > 0:
-            return jsonify(render_template('weekly.html', sid=x_survey, cnt=count, fcnt=fcount, wcnt=wcount))
+        if member_id['daily'] == 1:
+            return jsonify(render_template('gal_daily.html', sid=x_survey, cnt=count, fcnt=fcount, wcnt=wcount))
+            # return jsonify(render_template('weekly.html', sid=x_survey, cnt=count, fcnt=fcount, wcnt=wcount))
         else:
-            if member_id['daily'] == 1:
-                return jsonify(render_template('gal_daily.html', sid=x_survey, cnt=count, fcnt=fcount, wcnt=wcount))
+            if member_id['daily'] == 2:
+                return jsonify(render_template('daily.html', sid=x_survey, cnt=count, fcnt=fcount, wcnt=wcount))
                 # return jsonify(render_template('weekly.html', sid=x_survey, cnt=count, fcnt=fcount, wcnt=wcount))
-            else:
-                if member_id['daily'] == 2:
-                    return jsonify(render_template('daily.html', sid=x_survey, cnt=count, fcnt=fcount, wcnt=wcount))
-                    # return jsonify(render_template('weekly.html', sid=x_survey, cnt=count, fcnt=fcount, wcnt=wcount))
 
 #캘린더_갤럭시 사용자_영어
 @app.route('/ajax3_en', methods=['GET', 'POST'])
@@ -459,20 +456,16 @@ def ajax3_en():
     asia_seoul = datetime.datetime.fromtimestamp(time.time(), pytz.timezone('Asia/Seoul'))
     t = ['월요일', '화요일', '수요일', '목요일', '금요일', '토요일', '일요일']
     now = t[asia_seoul.today().weekday()]
-    if now == "토요일":
-        members.update_one({'id': x_survey}, {'$inc': {'weekly_count': -1}}) #토요일 로그인 -> count가 1씩 감소
+    if member_id['weekly_count'] > 0:
         return jsonify(render_template('weekly_en.html', sid=x_survey, cnt=count, fcnt=fcount, wcnt=wcount))
     else:
-        if member_id['weekly_count'] > 0:
-            return jsonify(render_template('weekly_en.html', sid=x_survey, cnt=count, fcnt=fcount, wcnt=wcount))
+        if member_id['daily'] == 1:
+            # return jsonify(render_template('weekly_en.html', sid=x_survey, cnt=count, fcnt=fcount, wcnt=wcount))
+            return jsonify(render_template('gal_daily_en.html', sid=x_survey, cnt=count, fcnt=fcount, wcnt=wcount))
         else:
-            if member_id['daily'] == 1:
+            if member_id['daily'] == 2:
+                return jsonify(render_template('daily_en.html', sid=x_survey, cnt=count, fcnt=fcount, wcnt=wcount))
                 # return jsonify(render_template('weekly_en.html', sid=x_survey, cnt=count, fcnt=fcount, wcnt=wcount))
-                return jsonify(render_template('gal_daily_en.html', sid=x_survey, cnt=count, fcnt=fcount, wcnt=wcount))
-            else:
-                if member_id['daily'] == 2:
-                    return jsonify(render_template('daily_en.html', sid=x_survey, cnt=count, fcnt=fcount, wcnt=wcount))
-                    # return jsonify(render_template('weekly_en.html', sid=x_survey, cnt=count, fcnt=fcount, wcnt=wcount))
 
 #팝업창
 @app.route('/pop.html', methods=['GET'])
@@ -499,6 +492,7 @@ def count():
     asia_seoul = datetime.datetime.fromtimestamp(time.time(), pytz.timezone('Asia/Seoul'))
     t = ['월요일', '화요일', '수요일', '목요일', '금요일', '토요일', '일요일']
     now = t[asia_seoul.today().weekday()]
+    print(now)
     if now == '토요일':
         members.update_many({}, {'$inc': {'weekly_count': 1}}) #collection에 있는 모든 id에서 count가 1씩 증가
 
@@ -567,8 +561,7 @@ if __name__ == '__main__':
 
     sched.add_job(count, 'cron', hour="00", minute="00", id="test_1") #토요일마다
     # sched.add_job(getCountDict, 'cron', hour="00", minute="01", id="test_2", args=[today])
-    sched.add_job(getCountDict, 'cron', hour="00", minute="01", id="test_2", args=[today])
-    # sched.add_job(getCountDict_A, 'interval', hours=2, start_date='2010-10-10 09:30:00', end_date='2014-06-15 11:00:00')   
+    sched.add_job(getCountDict, 'cron', hour="19", minute="45", id="test_2", args=[today])
     sched.start()
 
     # from waitress import serve
