@@ -27,42 +27,104 @@
 				var fileCheck = document.getElementById("f").value;
 				var fileCheck2 = document.getElementById("f2").value;
 				var fileCheck3 = document.getElementById("f3").value;
-				var chk = true
 
 				if (!fileCheck) {
-					if (!confirm("파일1이 제출 되지 않았습니다. 정말 제출하시겠습니까?")) {
+					if (!confirm("파일1-1이 제출 되지 않았습니다. 정말 제출하시겠습니까?")) {
 						alert("다시 확인해주세요")
-						chk = false
-						return false
 					}
 					else {
-						chk = true
+						var sid = '{{sid}}'
+						var data = {
+							"mood": $('input[name="mood"]:checked').val(),
+							"sid": sid
+						}
+						var formData = new FormData();
+						document.getElementById("submit").innerHTML = "제출중.... 완료될 때까지 기다려주세요";
+						formData.append('data', new Blob([JSON.stringify(data)], { type: "application/json" }));
+						formData.append('filed', document.getElementById("f").files[0]);
+						formData.append('filed2', document.getElementById("f2").files[0]);
+						formData.append('filed3', document.getElementById("f3").files[0]);
+						$.ajax({
+							type: 'POST',
+							url: '{{url_for("moody")}}',
+							data: formData,
+                            multiple: true,
+							contentType: false,
+							processData: false,
+							enctype: 'multipart/form-data',
+							success: function (data) {
+                            // location.href="http://114.71.220.59:2017/final"
+								location.href = "http://192.168.0.17:2019/final"
+							}
+						})
 					}
 				}
 
 				if (!fileCheck2) {
-					if (!confirm("파일2이 제출 되지 않았습니다. 정말 제출하시겠습니까?")) {
+					if (!confirm("파일1-2가 제출 되지 않았습니다. 정말 제출하시겠습니까?")) {
 						alert("다시 확인해주세요")
-						chk = false
-						return false
 					}
 					else {
-						chk = true
+						var sid = '{{sid}}'
+						var data = {
+							"mood": $('input[name="mood"]:checked').val(),
+							"sid": sid
+						}
+						var formData = new FormData();
+						document.getElementById("submit").innerHTML = "제출중.... 완료될 때까지 기다려주세요";
+						formData.append('data', new Blob([JSON.stringify(data)], { type: "application/json" }));
+						formData.append('filed', document.getElementById("f").files[0]);
+						formData.append('filed2', document.getElementById("f2").files[0]);
+						formData.append('filed3', document.getElementById("f3").files[0]);
+						$.ajax({
+							type: 'POST',
+							url: '{{url_for("moody")}}',
+							data: formData,
+                            multiple: true,
+							contentType: false,
+							processData: false,
+							enctype: 'multipart/form-data',
+							success: function (data) {
+                            // location.href="http://114.71.220.59:2017/final"
+							    location.href = "http://192.168.0.17:2019/final"
+							}
+						})
 					}
 				}
 
 				if (!fileCheck3) {
-					if (!confirm("파일3이 제출 되지 않았습니다. 정말 제출하시겠습니까?")) {
+					if (!confirm("파일2-1이 제출 되지 않았습니다. 정말 제출하시겠습니까?")) {
 						alert("다시 확인해주세요")
-						chk = false
-						return false
 					}
 					else {
-						chk = true
+						var sid = '{{sid}}'
+						var data = {
+							"mood": $('input[name="mood"]:checked').val(),
+							"sid": sid
+						}
+						var formData = new FormData();
+						document.getElementById("submit").innerHTML = "제출중.... 완료될 때까지 기다려주세요";
+						formData.append('data', new Blob([JSON.stringify(data)], { type: "application/json" }));
+						formData.append('filed', document.getElementById("f").files[0]);
+						formData.append('filed2', document.getElementById("f2").files[0]);
+						formData.append('filed3', document.getElementById("f3").files[0]);
+						$.ajax({
+							type: 'POST',
+							url: '{{url_for("moody")}}',
+							data: formData,
+                            multiple: true,
+							contentType: false,
+							processData: false,
+							enctype: 'multipart/form-data',
+							success: function (data) {
+                            // location.href="http://114.71.220.59:2017/final"
+								location.href = "http://192.168.0.17:2019/final"
+							}
+						})
 					}
 				}
 
-				if (chk == true) {
+				else {
 					var sid = '{{sid}}'
 					var data = {
 						"mood": $('input[name="mood"]:checked').val(),
@@ -83,8 +145,8 @@
 						processData: false,
 						enctype: 'multipart/form-data',
 						success: function (data) {
-                            location.href="http://114.71.220.59:2017/final"
-							//location.href = "http://192.168.0.17:2019/final"
+                            // location.href="http://114.71.220.59:2017/final"
+							location.href = "http://192.168.0.17:2019/final"
 						}
 					})
 				}
@@ -132,11 +194,13 @@
 			</label>
 			<hr>
 		</div>
-		<a style="font-size: 20px;">1. Gyroscope data</a><input type="file" id="f" name="filed" multiple="multiple">
+        <div>1. Sensor Recorder</div>
+		<a style="font-size: 20px;">1-1. Gyroscope data</a><input type="file" id="f" name="filed" multiple="multiple">
+		<br>
+        <a style="font-size: 20px;">1-2. Acceleration data</a><input type="file" id="f2" name="filed2" multiple="multiple">
 		<hr>
-		<a style="font-size: 20px;">2. Acceleration data</a><input type="file" id="f2" name="filed2" multiple="multiple">
-		<hr>
-		<a style="font-size: 20px;">3. Data</a><input type="file" id="f3" name="filed3" multiple="multiple">
+        <div>2. Health</div>
+		<a style="font-size: 20px;">2-1. Health data</a><input type="file" id="f3" name="filed3" multiple="multiple">
 	</form>
 	<button type="submit" value="submit" id="submit">
 		제출하기
@@ -144,4 +208,3 @@
 </body>
 
 </html>
-<!DOCTYPE html>
