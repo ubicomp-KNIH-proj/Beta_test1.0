@@ -53,8 +53,8 @@
 							processData: false,
 							enctype: 'multipart/form-data',
 							success: function (data) {
-                            	location.href="http://114.71.220.59:2017/final_en"
-								// location.href = "http://192.168.0.17:2019/final_en"
+                            // location.href="http://114.71.220.59:2017/final_en"
+								location.href = "http://192.168.0.17:2019/final_en"
 							}
 						})
 					}
@@ -85,8 +85,8 @@
 							processData: false,
 							enctype: 'multipart/form-data',
 							success: function (data) {
-                            	location.href="http://114.71.220.59:2017/final_en"
-							    // location.href = "http://192.168.0.17:2019/final_en"
+                            // location.href="http://114.71.220.59:2017/final_en"
+							    location.href = "http://192.168.0.17:2019/final_en"
 							}
 						})
 					}
@@ -117,8 +117,8 @@
 							processData: false,
 							enctype: 'multipart/form-data',
 							success: function (data) {
-                            	location.href="http://114.71.220.59:2017/final_en"
-								// location.href = "http://192.168.0.17:2019/final_en"
+                            // location.href="http://114.71.220.59:2017/final_en"
+								location.href = "http://192.168.0.17:2019/final_en"
 							}
 						})
 					}
@@ -145,8 +145,8 @@
 						processData: false,
 						enctype: 'multipart/form-data',
 						success: function (data) {
-                            location.href="http://114.71.220.59:2017/final_en"
-							// location.href = "http://192.168.0.17:2019/final_en"
+                            // location.href="http://114.71.220.59:2017/final_en"
+							location.href = "http://192.168.0.17:2019/final_en"
 						}
 					})
 				}
@@ -159,8 +159,10 @@
 <body>
 	<h1 id="title_mood">How was your day?</h1>
 	<p>number of surveys: {{cnt}}, number of submissions: {{fcnt}}</p>
+	<!-- Daily Survey Form -->
 	<form id="form" action="/moody_en" method="POST" name="fm">
 		<div class="form-control">
+			<!-- Input Type Radio Button -->
 			<label for="recommed-1">
 				<img src="../static/great.png" width="100" height="110">
 				<input type="radio" id="mood" style="width: 30px; height: 30px;" value="5" name="mood">
