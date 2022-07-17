@@ -274,7 +274,7 @@ def moody():
         fs3.put(contents, filename=fname3)
 
     members.update_one({'id': s_id}, {'$inc': {'submit_count': 1}})
-    # return render_template('weekly.html')
+    return render_template('weekly.html')
 
 #Daily_아이폰 사용자_영어
 @app.route('/moody_en', methods=['POST'])
@@ -500,7 +500,9 @@ def count():
 IoT_1 = "http://114.71.220.59:7579"
 
 def countCIN(serverName, aeName, today):
-    cra = '&cra=' + str(int(today) - 1) + 'T150000'
+    cra = datetime.datetime.strptime(today, "%Y%m%d")
+    cra = cra - timedelta(1)
+    cra = '&cra=' + cra.strftime("%Y%m%d") + 'T150000'
     crb = '&crb=' + today + 'T145959'
     
     url1 = IoT_1 + "/Mobius/" + aeName + "/mobile?fu=1&ty=4&rcn=4" + cra + crb
@@ -561,7 +563,7 @@ if __name__ == '__main__':
 
     sched.add_job(count, 'cron', hour="00", minute="00", id="test_1") #토요일마다
     # sched.add_job(getCountDict, 'cron', hour="00", minute="01", id="test_2", args=[today])
-    sched.add_job(getCountDict, 'cron', hour="19", minute="45", id="test_2", args=[today])
+    sched.add_job(getCountDict, 'cron', hour="00", minute="00", id="test_2", args=[today]) # 매일, 사용자에 대한 데이터 수 GET
     sched.start()
 
     # from waitress import serve
