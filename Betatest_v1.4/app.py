@@ -485,16 +485,21 @@ def ajax3():
     gcount = member_id['gyro_count']
     acount = member_id['acc_count']
     fcount = member_id['attach_count']
+    cal_list = member_id["cal_list"]
     cin_count = member_id["CIN_count"]
-
-    if member_id['weekly_count'] > 0:
-        return jsonify(render_template('weekly.html', sid=x_survey, cnt=count, fcnt=fcount, wcnt=wcount))
+    
+    if (len(cal_list)+1) == count:
+        flash("오늘 설문조사를 완료했습니다. 내일 진행해주세요.")
+        return jsonify(render_template('login.html', sid=x_survey))
     else:
-        if member_id['daily'] == 1:
-            return jsonify(render_template('gal_daily.html', sid=x_survey, cnt=count, fcnt=fcount, wcnt=wcount))
+        if member_id['weekly_count'] > 0:
+            return jsonify(render_template('weekly.html', sid=x_survey, cnt=count, fcnt=fcount, wcnt=wcount))
         else:
-            if member_id['daily'] == 2:
-                return jsonify(render_template('daily.html', sid=id, cnt=count, wcnt=wcount, hcnt=hcount, gcnt=gcount, acnt=acount))
+            if member_id['daily'] == 1:
+                return jsonify(render_template('gal_daily.html', sid=x_survey, cnt=count, fcnt=fcount, wcnt=wcount))
+            else:
+                if member_id['daily'] == 2:
+                    return jsonify(render_template('daily.html', sid=id, cnt=count, wcnt=wcount, hcnt=hcount, gcnt=gcount, acnt=acount))
 
 #캘린더_갤럭시 사용자_영어
 @app.route('/ajax3_en', methods=['GET', 'POST'])
@@ -509,16 +514,21 @@ def ajax3_en():
     gcount = member_id['gyro_count']
     acount = member_id['acc_count']
     fcount = member_id['attach_count']
+    cal_list = member_id["cal_list"]
     cin_count = member_id["CIN_count"]
 
-    if member_id['weekly_count'] > 0:
-        return jsonify(render_template('weekly_en.html', sid=x_survey, cnt=count, fcnt=fcount, wcnt=wcount))
+    if (len(cal_list)+1) == count:
+        flash("You have completed the survey today. Please proceed tomorrow.")
+        return jsonify(render_template('login_en.html', sid=x_survey))
     else:
-        if member_id['daily'] == 1:
-            return jsonify(render_template('gal_daily_en.html', sid=x_survey, cnt=count, fcnt=fcount, wcnt=wcount))
+        if member_id['weekly_count'] > 0:
+            return jsonify(render_template('weekly_en.html', sid=x_survey, cnt=count, fcnt=fcount, wcnt=wcount))
         else:
-            if member_id['daily'] == 2:
-                return jsonify(render_template('daily.html', sid=id, cnt=count, wcnt=wcount, hcnt=hcount, gcnt=gcount, acnt=acount))
+            if member_id['daily'] == 1:
+                return jsonify(render_template('gal_daily_en.html', sid=x_survey, cnt=count, fcnt=fcount, wcnt=wcount))
+            else:
+                if member_id['daily'] == 2:
+                    return jsonify(render_template('daily.html', sid=id, cnt=count, wcnt=wcount, hcnt=hcount, gcnt=gcount, acnt=acount))
 
 # 이전 파일 처리
 @app.route('/justfile', methods=['POST'])
@@ -556,9 +566,6 @@ def justfile():
             # 파일이 있어야만 색깔이 바뀌도록
             cal_list[index] = 1
             members.update_one({'id': s_id}, { '$set': {'cal_list': cal_list}})
-            md = { "date": date }
-            survey_coll = mongo.db.get_collection(s_id)
-            survey_coll.insert_one(md)
     else:
         flash("제출된 파일이 아니거나 제출이 가능한 날짜가 아닙니다.")
         
